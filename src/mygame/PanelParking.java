@@ -16,4 +16,7 @@ public class PanelParking extends JPanel {
 			super.paint(g);
 			parking.Draw(g);
 		}
+		public void setHangar (Parking<ITransport, IPatch> parking) {
+			this.parking = parking;
+		}
 }

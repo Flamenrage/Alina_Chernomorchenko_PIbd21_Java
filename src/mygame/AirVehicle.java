@@ -1,12 +1,10 @@
 package mygame;
 
-
 import java.awt.Color;
 import java.awt.Graphics;
 
 public abstract class AirVehicle implements ITransport {
 
-	
 protected int _startPosX;
 protected int _startPosY;
 protected int _pictureWidth;

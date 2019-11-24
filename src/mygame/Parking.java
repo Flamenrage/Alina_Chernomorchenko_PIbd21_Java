@@ -3,13 +3,15 @@ package mygame;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.HashMap;
 
 public class Parking<T extends ITransport, U extends IPatch> {
-	private T[] places;
-	private U[] placesPatches;
+	private HashMap<Integer, T> places;
+	private HashMap<Integer, U> placesPatches;
 	private int pictureWidth;
     private int pictureHeight;
-    
+    public int maxCount;
+
 	public int getPictureWidth() {
 		return pictureWidth;
 	}
@@ -24,27 +26,31 @@ public class Parking<T extends ITransport, U extends IPatch> {
 	}
 	private final int placeSizeWidth = 210;
     private final int placeSizeHeight = 100;
-    @SuppressWarnings("unchecked")
+    public T getPlace(int i) {
+    	if (places.containsKey(i)){
+		return places.get(i);}
+    	 else return null;
+	}
+	public U getPlacesPatches(int i) {
+		if (placesPatches.containsKey(i)){
+		return placesPatches.get(i);}
+		 else return null;    	
+	}
 	public Parking(int sizes, int pictureWidth, int pictureHeight)
     {
-        this.places = (T[]) new ITransport[sizes];
-        this.placesPatches = (U[]) new IPatch[sizes];
+		this.places = new HashMap<>(sizes);
+	    this.placesPatches = new HashMap<>(sizes);
         setPictureWidth(pictureWidth);
         setPictureHeight(pictureHeight);
-        for (int i = 0; i < places.length; i++)
-        {
-            places[i] = null;
-            placesPatches[i] = null;
-            
-        }
+        this.maxCount = sizes;
     }
     public int addPlane(T plane) {
-    	for (int i = 0; i < places.length; i++)
+    	for (int i = 0; i < maxCount; i++)
         {
-            if (this.CheckFreePlace(i))
+            if (CheckFreePlace(i))
             {
-                places[i] = plane;
-                places[i].SetPosition(5 + i / 5 * placeSizeWidth + 15, 
+            	  places.put(i, plane);
+                  places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 15, 
                     i % 5 * placeSizeHeight + 21, this.pictureWidth, this.pictureHeight);
                 return i;
             }
@@ -53,18 +59,18 @@ public class Parking<T extends ITransport, U extends IPatch> {
     }
 	 public T Remove(int index) {
 	    	
-	    	if (index < 0 || index> places.length)
+		 if (index < 0 || index> maxCount)
 	        {
 	            return null;
 	        }
-	        if (!this.CheckFreePlace(index))
+	        if (places.containsKey(index))
 	        {
-	            T plane = places[index];
-	            places[index] = null;
+	        	T plane = places.get(index);
+	            places.remove(index);
 	            return plane;
 	        }
 	        return null;
-	    }
+	 }
   
     public void addMultiplyPlane (T plane, int k){
     	for (int i = 0; i<k; i++){
@@ -80,15 +86,15 @@ public class Parking<T extends ITransport, U extends IPatch> {
    
    
     public int addPlane(T plane, U patches) {
-    	for (int i = 0; i < places.length; i++)
+    	for (int i = 0; i < maxCount; i++)
         {
-            if (this.CheckFreePlace(i))
+            if (CheckFreePlace(i))
             {
-                places[i] = plane;
-                places[i].SetPosition(5 + i / 5 * placeSizeWidth + 15, 
+            	places.put(i, plane);
+                places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 15, 
                     i % 5 * placeSizeHeight + 21, this.pictureWidth, this.pictureHeight);
-                placesPatches[i] = patches;
-                placesPatches[i].SetPosition(5 + i / 5 * placeSizeWidth + 15,
+                placesPatches.put(i, patches);
+                placesPatches.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 15,
                 		i % 5 * placeSizeHeight + 21);
                 return i;
             }
@@ -97,43 +103,43 @@ public class Parking<T extends ITransport, U extends IPatch> {
     }
    
     public U RemovePatches(int index) {
-    	if (index < 0 || index > places.length)
+    	if (index < 0 || index > maxCount)
         {
             return null;
         }
-        if (placesPatches[index] != null)
+        if (placesPatches.containsKey(index))
         {
-            U box = placesPatches[index];
-            placesPatches[index] = null;
-            return box;
+        	U box = placesPatches.get(index);
+        	placesPatches.remove(index);
+        	return box;
         }
         return null;
     }
     private boolean CheckFreePlace(int index)
     {
-        return (places[index] == null);
+    	return !(places.containsKey(index));
     }
     public void Draw(Graphics g)
     {
-    	DrawMarking(g);
-        for (int i = 0; i < places.length; i++)
-        {
-            if (!CheckFreePlace(i))
-            {
-                places[i].DrawPlane(g);
-                if (placesPatches[i] != null) {
-                	placesPatches[i].Draw(g, places[i].GetMainColor(), placesPatches[i].GetPositionX(),
-                			placesPatches[i].GetPositionY());
-                }
-            }
-        }        
+     DrawMarking(g);
+   	 for (int i = 0; i < maxCount; i++)
+       {
+           if (!CheckFreePlace(i))
+           {
+               places.get(i).DrawPlane(g);
+               if (placesPatches.containsKey(i)) {
+               	placesPatches.get(i).Draw(g, places.get(i).GetMainColor(), placesPatches.get(i).GetPositionX(),
+               			placesPatches.get(i).GetPositionY());
+               }
+           }
+       }        
     }
     private void DrawMarking(Graphics g)
     {
     	Graphics2D g2 = (Graphics2D) g;
     	g2.setStroke((new BasicStroke(3f)));
-        g2.drawRect(0, 0, (places.length / 5) * placeSizeWidth, 500);
-        for (int i = 0; i < places.length / 5; i++)
+        g2.drawRect(0, 0, (maxCount / 5) * placeSizeWidth, 500);
+        for (int i = 0; i < maxCount / 5; i++)
         {
             for (int j = 0; j < 6; j++)
             {
