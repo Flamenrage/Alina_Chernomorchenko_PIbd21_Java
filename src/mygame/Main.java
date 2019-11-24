@@ -118,7 +118,7 @@ public class Main {
 			}
 		}); buttonCreateNewPlane.setBounds(241, 557, 201, 42); frame.getContentPane().add(buttonCreateNewPlane);
 		
-		buttonUp = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\up.png"));
+		buttonUp = new JButton(new ImageIcon("D:\\РЈРЅРёРІРµСЂ\\РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ\\РќРѕРІР°СЏ РїР°РїРєР°\\up.png"));
 		buttonUp.setEnabled(false);
 		buttonUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -133,7 +133,7 @@ public class Main {
 		frame.getContentPane().add(buttonUp);
 		
 		
-		buttonLeft = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\left.png"));
+		buttonLeft = new JButton(new ImageIcon("D:\\РЈРЅРёРІРµСЂ\\РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ\\РќРѕРІР°СЏ РїР°РїРєР°\\left.png"));
 		buttonLeft.setEnabled(false);
 		buttonLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -144,7 +144,7 @@ public class Main {
 		buttonLeft.setBounds(738, 599, 42, 42);
 		frame.getContentPane().add(buttonLeft);
 		
-		 buttonRight = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\right.png"));
+		 buttonRight = new JButton(new ImageIcon("D:\\РЈРЅРёРІРµСЂ\\РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ\\РќРѕРІР°СЏ РїР°РїРєР°\\right.png"));
 		buttonRight.setEnabled(false);
 		buttonRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -158,7 +158,7 @@ public class Main {
 		frame.getContentPane().add(buttonRight);
 		
 		
-		buttonDown = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\down.png"));
+		buttonDown = new JButton(new ImageIcon("D:\\РЈРЅРёРІРµСЂ\\РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ\\РќРѕРІР°СЏ РїР°РїРєР°\\down.png"));
 		buttonDown.setEnabled(false);
 		buttonDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

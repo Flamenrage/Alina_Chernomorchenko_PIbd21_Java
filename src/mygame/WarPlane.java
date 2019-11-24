@@ -26,28 +26,24 @@ public class WarPlane extends AirVehicle{
         float step = MaxSpeed * 100 / Weight;
         switch (direction)
         {
-            // вправо
             case Right:
                 if (_startPosX + step < _pictureWidth - planeWidth)
                 {
                     _startPosX += step;
                 }
                 break;
-            //влево
             case Left:
                 if (_startPosX - step > 0)
                 {
                     _startPosX -= step;
                 }
                 break;
-            //вверх
             case Up:
                 if (_startPosY - step > 0)
                 {
                     _startPosY -= step;
                 }
                 break;
-            //вниз
             case Down:
                 if (_startPosY + step < _pictureHeight - planeHeight)
 
@@ -66,18 +62,23 @@ public class WarPlane extends AirVehicle{
     	g2.setStroke(new BasicStroke(5.0f));
     	g.setColor(Color.BLACK);
 		g2.setStroke(new BasicStroke(5.0f));
-		g2.drawOval( _startPosX + 20/a, _startPosY + 33/a, 140/a, 44/a); // тело
-		g2.drawRect( _startPosX + 30/a, _startPosY + 23/a, 20/a, 64/a); // хвост
-		g2.drawOval( _startPosX + 100/a, _startPosY - 32/a, 30/a, 180/a); //крыло
+		g2.drawOval( _startPosX + 20/a, _startPosY + 33/a, 140/a, 44/a);
+		g2.drawRect( _startPosX + 30/a, _startPosY + 23/a, 20/a, 64/a);
+		g2.drawOval( _startPosX + 100/a, _startPosY - 32/a, 30/a, 180/a);
 		g.setColor(MainColor);
-		g.fillOval(_startPosX + 20/a, _startPosY + 33/a, 140/a, 44/a); //br
-		g.fillRect( _startPosX + 30/a, _startPosY + 23/a, 20/a, 64/a); //br
-		g.fillOval( _startPosX + 100/a, _startPosY - 32/a, 30/a, 180/a); //br
-		g2.setStroke(new BasicStroke(5.0f)); // окошко
+		g.fillOval(_startPosX + 20/a, _startPosY + 33/a, 140/a, 44/a);
+		g.fillRect( _startPosX + 30/a, _startPosY + 23/a, 20/a, 64/a);
+		g.fillOval( _startPosX + 100/a, _startPosY - 32/a, 30/a, 180/a);
+		g2.setStroke(new BasicStroke(5.0f));
 		g.setColor(Color.BLACK);
 		g.drawOval(_startPosX + 90/a, _startPosY + 40/a, 30/a, 20/a);
 		g.setColor( new Color(0, 236, 255));
 		g.fillOval(_startPosX + 90/a, _startPosY + 40/a, 30/a, 20/a);
 		
+    }
+    @Override
+    public ITransport Clone(){
+    	ITransport tr = new WarPlane(this.MaxSpeed, this.Weight, this.MainColor);
+    	return tr;
     }
 }

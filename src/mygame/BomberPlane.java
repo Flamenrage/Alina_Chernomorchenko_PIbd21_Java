@@ -165,6 +165,11 @@ public class BomberPlane extends WarPlane {
                 break;
         }
     }
-
+    @Override
+    public ITransport Clone(){
+    	ITransport tr = new BomberPlane(this.MaxSpeed, this.Weight, this.MainColor, this.DopColor,
+    			this.Bombs, this.Shoot, this.BackBombs);
+    	return tr;
+    }
 
 }
