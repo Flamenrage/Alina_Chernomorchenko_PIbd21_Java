@@ -22,17 +22,6 @@ public class BomberPlane extends WarPlane {
         Bombs = bombs;
         Shoot = shoot;
         BackBombs = backBombs;
-       switch ((int)(Math.random() * 3)) {
-        case 0:
-        	planepatches = new PlanePatches((int)(Math.random() * 3));
-        	break;
-        case 1:
-        	planepatches = new PlaneBack((int)(Math.random() * 3));
-        	break;
-        case 2:
-        	planepatches = new PlaneMiddle((int)(Math.random() * 3));
-        	break;
-        }
 	}
 
 	
@@ -131,8 +120,12 @@ public class BomberPlane extends WarPlane {
 
      }
 	 if (BackBombs){
-	    Color myDopColor =  new Color(204, 0, 0);
-		planepatches.Draw(g, myDopColor, _startPosX, _startPosY);		
+		 	g.setColor(Color.RED);
+			g.drawOval(_startPosX +29/a, _startPosY + 15/a, 33/a, 12/a); //
+	        g.drawOval(_startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);
+	      
+	        g.fillOval(_startPosX + 29/a, _startPosY + 15/a, 33/a, 12/a);
+	        g.fillOval( _startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);	
 	 }
 		}
 
