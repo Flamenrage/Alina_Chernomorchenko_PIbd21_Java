@@ -75,9 +75,6 @@ public class BomberPlane {
 	    return yellowshell;
 
 	}
-
-
-
 	public BomberPlane(int maxSpeed, float weight, Color mainColor, Color dopColor, int bombs, boolean shoot) {
 	    SetMaxSpeed(maxSpeed);
 	    SetWeight(weight);
@@ -96,25 +93,25 @@ public class BomberPlane {
 	public void MoveTransport(Direction direction) {
 	    float step = GetMaxSpeed() * 100 / GetWeight();
 	    switch (direction) {
-	        // вправо
+	        // ГўГЇГ°Г ГўГ®
 	        case Right:
 	            if (_startPosX + step < _pictureWidth - carWidth) {
 	                _startPosX += step;
 	            }
 	            break;
-	            //влево
+	            //ГўГ«ГҐГўГ®
 	        case Left:
 	            if (_startPosX - step > 0) {
 	                _startPosX -= step;
 	            }
 	            break;
-	            //вверх
+	            //ГўГўГҐГ°Гµ
 	        case Up:
 	            if (_startPosY - step > 30) {
 	                _startPosY -= step;
 	            }
 	            break;
-	            //вниз
+	            //ГўГ­ГЁГ§
 	        case Down:
 	            if (_startPosY + step < _pictureHeight - carHeight) {
 	                _startPosY += step;
@@ -205,19 +202,17 @@ public class BomberPlane {
 			
 		}
 		g2.setStroke(new BasicStroke(5.0f));
-			
-			
+
 		}
 			g.setColor(Color.BLACK);
 			g2.setStroke(new BasicStroke(5.0f));
-			g2.drawOval( _startPosX + 20, _startPosY + 33, 140, 44); // тело
-			g2.drawRect( _startPosX + 30, _startPosY + 23, 20, 64); // хвост
+			g2.drawOval( _startPosX + 20, _startPosY + 33, 140, 44); // ГІГҐГ«Г®
+			g2.drawRect( _startPosX + 30, _startPosY + 23, 20, 64); // ГµГўГ®Г±ГІ
 			
-			g2.drawOval( _startPosX + 100, _startPosY - 32, 30, 180); //крыло
+			g2.drawOval( _startPosX + 100, _startPosY - 32, 30, 180); //ГЄГ°Г»Г«Г®
 			g.setColor(GetMainColor());
 			
-			
-			
+
 			g.fillOval(_startPosX + 20, _startPosY + 33, 140, 44); //br
 			g.fillRect( _startPosX + 30, _startPosY + 23, 20, 64); //br
 			g.fillOval( _startPosX + 100, _startPosY - 32, 30, 180); //br
