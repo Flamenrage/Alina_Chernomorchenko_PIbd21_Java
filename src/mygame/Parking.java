@@ -84,7 +84,6 @@ public class Parking<T extends ITransport, U extends IPatch> {
 		}
     }
    
-   
     public int addPlane(T plane, U patches) {
     	for (int i = 0; i < maxCount; i++)
         {

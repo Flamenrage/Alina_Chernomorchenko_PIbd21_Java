@@ -10,9 +10,12 @@ public interface ITransport {
     void MoveTransport(Direction direction);
 
 	void DrawPlane(Graphics g);
+	void SetMainColor(Color color);
+    void SetDopColor(Color color);
 	Color GetMainColor();
     Color GetDopColor();
     int GetStartPosX();
     int GetStartPosY();
     ITransport Clone();
+
 }

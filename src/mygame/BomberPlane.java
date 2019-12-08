@@ -9,8 +9,6 @@ import javax.swing.JPanel;
 
 public class BomberPlane extends WarPlane {
 
-
-	public Color DopColor;
     public int Bombs;
     public boolean Shoot;
     public boolean BackBombs;
@@ -23,7 +21,6 @@ public class BomberPlane extends WarPlane {
         Shoot = shoot;
         BackBombs = backBombs;
 	}
-
 	
 	public void DrawPlane(Graphics g)
 	{
@@ -43,7 +40,7 @@ public class BomberPlane extends WarPlane {
 	g2.drawOval(_startPosX + 140/a, _startPosY + 80/a, 15/a, 10/a);
 	
 	
-	g.setColor(Color.RED);
+	g.setColor(DopColor);
 	
 	
 	g2.fillOval(_startPosX + 133/a, _startPosY - 30/a, 15/a, 10/a);
@@ -105,9 +102,8 @@ public class BomberPlane extends WarPlane {
 		break;
 			
 		}
-				
-			
-		}
+
+	 }
 	 super.DrawPlane(g);
 	 if (Shoot)
      { 	 g.setColor(DopColor);

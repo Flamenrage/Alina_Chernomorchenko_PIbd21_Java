@@ -17,8 +17,6 @@ public class WarPlane extends AirVehicle{
     	MaxSpeed = maxSpeed;
 	    Weight = weight;
 	    MainColor = mainColor;
-	   
-	   
     }
     @Override
     public void MoveTransport(Direction direction)

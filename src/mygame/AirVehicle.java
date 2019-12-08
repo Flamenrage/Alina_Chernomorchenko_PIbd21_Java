@@ -19,6 +19,12 @@ public int GetStartPosX() {
 public int GetStartPosY() {
 	return _startPosY;
 }
+public void SetMainColor(Color mainColor) {
+	MainColor = mainColor;
+}
+public void SetDopColor(Color dopColor){
+	DopColor = dopColor;
+}
 public Color GetMainColor() {
 	return MainColor;
 }
