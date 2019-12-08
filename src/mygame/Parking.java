@@ -57,6 +57,27 @@ public class Parking<T extends ITransport, U extends IPatch> {
         }
         return -1;
     }
+    public int AddPlane(T plane, int index) {
+    	if (CheckFreePlace(index)) {
+    		places.put(index, plane);
+    		places.get(index).SetPosition(5 + index / 5 * placeSizeWidth + 15, 
+                    index % 5 * placeSizeHeight + 21, pictureWidth, pictureHeight);
+    		return index;
+    	}
+    	return -1;
+    }    
+    public int AddPlane(T plane, U patches, int index) {
+    	if (CheckFreePlace(index)) {
+    		places.put(index, plane);
+    		places.get(index).SetPosition(5 + index / 5 * placeSizeWidth + 15, 
+                    index % 5 * placeSizeHeight + 21, pictureWidth, pictureHeight);
+    		placesPatches.put(index, patches);
+    		placesPatches.get(index).SetPosition(places.get(index).GetStartPosX(),
+            		places.get(index).GetStartPosY());
+    		return index;
+    	}
+    	return -1;
+    }
 	 public T Remove(int index) {
 	    	
 		 if (index < 0 || index> maxCount)

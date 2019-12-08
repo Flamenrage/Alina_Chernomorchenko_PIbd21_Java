@@ -8,4 +8,6 @@ public interface IPatch {
 	public void SetPosition(int positionX, int positionY);
 	public int GetPositionX();
 	public int GetPositionY();
+	public String toString();
+
 }

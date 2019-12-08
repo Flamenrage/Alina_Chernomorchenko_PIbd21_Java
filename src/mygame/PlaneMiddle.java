@@ -82,6 +82,9 @@ public class PlaneMiddle implements IPatch{
 		default:
 			break;
 		}
-		
+	}
+	@Override
+	public String toString() {
+		return "PlaneMiddle";
 	}
 }
