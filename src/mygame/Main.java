@@ -38,9 +38,7 @@ public class Main {
 			public void run() {
 				try {
 					Main window = new Main();
-					
-					
-					
+	
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,13 +71,10 @@ public class Main {
 	}
 	Random rnd = new Random();
 	
-	
-	
 	public Main() {
 		initialize();
 		
 	}
-	
 	
 	private void initialize() {
 		frame = new JFrame();
@@ -87,7 +82,6 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-	//	frame.getContentPane().add(panel);
 		buttonCreateNewBomberPlane = new JButton("\u0421\u043E\u0437\u0434\u0430\u0442\u044C\r\n \u0441\u0430\u043C\u043E\u043B\u0435\u0442");
 		buttonCreateNewBomberPlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -128,10 +122,8 @@ public class Main {
 		});
 		
 		
-		
 		buttonUp.setBounds(780, 557, 42, 42);
 		frame.getContentPane().add(buttonUp);
-		
 		
 		buttonLeft = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\left.png"));
 		buttonLeft.setEnabled(false);
@@ -152,11 +144,9 @@ public class Main {
 				panel.repaint();
 			}
 		});
-		
-		
+			
 		buttonRight.setBounds(822, 599, 42, 42);
 		frame.getContentPane().add(buttonRight);
-		
 		
 		buttonDown = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\down.png"));
 		buttonDown.setEnabled(false);
@@ -166,11 +156,9 @@ public class Main {
 				panel.repaint();
 			}
 		});
-		
-		
+			
 		buttonDown.setBounds(780, 599, 42, 42);
 		frame.getContentPane().add(buttonDown);
-		
-		
+
 	}
 }
