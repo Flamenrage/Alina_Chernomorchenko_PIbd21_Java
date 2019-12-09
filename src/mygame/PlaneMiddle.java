@@ -28,7 +28,6 @@ public class PlaneMiddle implements IPatch{
 	public void Draw(Graphics g, Color color, int startPosX, int startPosY) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(5.0f));
-		//g.setColor( new Color(204, 0, 0));
 		int a = 2;
 		switch (numberOfPatches) {
 		case One:
@@ -46,8 +45,8 @@ public class PlaneMiddle implements IPatch{
 			break;
 		case Two:
 			g.setColor(color);
-			g.drawOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a); // верхняя лопасть
-			g.drawOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a); // нижняя лопасть
+			g.drawOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+			g.drawOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			g.setColor( new Color(255,0, 255)); 
 			g.fillOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a);
 			g.fillOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a);
@@ -55,11 +54,11 @@ public class PlaneMiddle implements IPatch{
 			break;
 		case Three:
 			g.setColor(color);
-			g.drawOval(startPosX + 50/a, startPosY + 40/a, 30/a, 20/a); // низ
-			g.drawOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a); // верхняя лопасть
-			g.drawOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a); // нижняя лопасть
+			g.drawOval(startPosX + 50/a, startPosY + 40/a, 30/a, 20/a); // пїЅпїЅпїЅ
+			g.drawOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+			g.drawOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			g.setColor( new Color(255, 0, 255)); 
-			g.fillOval(startPosX + 50/a, startPosY + 40/a, 30/a, 20/a); // отсюда
+			g.fillOval(startPosX + 50/a, startPosY + 40/a, 30/a, 20/a); // пїЅпїЅпїЅпїЅпїЅпїЅ
 			g.fillOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a);
 			g.fillOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a);
 			g.setColor(Color.RED);
