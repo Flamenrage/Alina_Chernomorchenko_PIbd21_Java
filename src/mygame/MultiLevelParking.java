@@ -156,31 +156,37 @@ public class MultiLevelParking {
 	}
 	public boolean saveLevelData(String fileName, int index) {
 		try {
+			if ((index > hangarLevels.size())||(index < 0)){
+				return false;
+			}
 			BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
 			bw.write("SingleLevel");
 			bw.newLine();
 			Parking<ITransport, IPatch> level = hangarLevels.get(index);
+			
 			for (int i = 0; i < countPlaces; i++) {
-				ITransport ship = level.getPlace(i);
-				if (ship != null) {
-					if (!(ship instanceof BomberPlane)) {
-						bw.write(i + ":WarPlane:" + ship.getConfig());
+				ITransport plane = level.getPlace(i);
+				if (plane != null) {
+					if (!(plane instanceof BomberPlane)) {
+						bw.write(i + ":WarPlane:" + plane.getConfig());
 						bw.newLine();
 					} else {
-						IPatch decks = level.getPlacesPatches(i);
-						if (decks != null) {
-							bw.write(i + ":BomberPlane:" + decks.toString() + ":" + 
-									ship.getConfig());
+						IPatch patches = level.getPlacesPatches(i);
+						if (patches != null) {
+							bw.write(i + ":BomberPlane:" + patches.toString() + ":" + 
+									plane.getConfig());
 						} else {
 							bw.write(i + ":BomberPlane:" + "PlanePatches" + ":" +
-									ship.getConfig());
+									plane.getConfig());
 						}
 						bw.newLine();
 					}
 				}
 			}
 			bw.close();
-		} catch (Exception ex) {
+			
+		} 
+		catch (Exception ex) {
 			ex.printStackTrace();
 			return false;
 		}
