@@ -2,31 +2,35 @@ package mygame;
 
 import java.awt.EventQueue;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 import java.awt.event.ActionEvent;
+import java.util.Hashtable;
 
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.UIManager;
+import javax.swing.JList;
+
+import java.awt.Font;
 
 public class ParkingMain {
 	
 	private final int panelHangarWidth = 870;
 	private final int panelHangarHeight = 560;
+
 	private final int countLevels = 5;
 	private MultiLevelParking hangar;
 	private ArrayList<ITransport> bankPlane;
@@ -64,11 +68,13 @@ public class ParkingMain {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings("unchecked")
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1267, 620);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
 		hangar = new MultiLevelParking(countLevels,panelHangarWidth, panelHangarWidth);
 		bankPlane = new ArrayList<>();
 		bankPatches = new ArrayList<>();
@@ -98,8 +104,7 @@ public class ParkingMain {
 		});
 		frame.getContentPane().add(list);
 		frame.getContentPane().add(panelHangar);
-
-		JButton btnAddPlane = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
+    JButton btnAddPlane = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
 		btnAddPlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PlaneConfig configFrame = new PlaneConfig();
@@ -110,7 +115,6 @@ public class ParkingMain {
 		});
 		btnAddPlane.setBounds(892, 169, 147, 44);
 		frame.getContentPane().add(btnAddPlane);
-
 		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
 		label_1.setBounds(901, 267, 48, 14);
 		frame.getContentPane().add(label_1);
@@ -124,9 +128,7 @@ public class ParkingMain {
 		buttonTakePlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textFieldIndex.getText() != "") {
-					
 					plane = hangar.getPlane(list.getSelectedIndex(),Integer.parseInt(textFieldIndex.getText()));
-					
 					if (plane != null) {
 						panelTake.clear();
 						bankPlane.set(bankIndex, plane);
@@ -163,91 +165,5 @@ public class ParkingMain {
 		});
 		button_view_collection.setBounds(1015, 294, 119, 23);
 		frame.getContentPane().add(button_view_collection);
-		}
 	}
-	public void initializeHangarPanel(){
-		panelHangar = new PanelParking(hangar);
-		panelHangar.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelHangar.setBounds(10, 11, panelHangarWidth, panelHangarHeight);
-		frame.getContentPane().add(panelHangar);
-		
-		ParkLabel = new JLabel("Припарковать:");
-		ParkLabel.setBounds(901, 36, 100, 16);
-		frame.getContentPane().add(ParkLabel);
-		
-		panel = new JPanel();
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\u0417\u0430\u0431\u0440\u0430\u0442\u044C \u0441\u0430\u043C\u043E\u043B\u0435\u0442", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(892, 238, 208, 295);
-		frame.getContentPane().add(panel);
-	
-		btnNewButton_1 = new JButton("Убрать несколько");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(textFieldIndex.getText() != "") {
-					panelTake.clear();		
-					int k = Integer.parseInt(textFieldIndex.getText());
-					plane = hangar.Remove(k);	
-					panelTake.clear();
-					panelTake.drawplane(plane);
-					panelTake.plane.SetPosition(50, 50, panelHangarWidth, panelHangarHeight);
-					panelHangar.repaint();
-					panelTake.repaint();
-					hangar.RemoveMultiplyPlane(k);	
-					panelHangar.repaint();
-					}
-				}
-		});
-		btnNewButton_1.setBounds(901, 529, 147, 25);
-		frame.getContentPane().add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("Добавить несколько");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int k = 3;
-				ITransport plane;
-				Color newColor = JColorChooser.showDialog(frame, "Выберите основной цвет", Color.gray);
-				if (newColor != null) {
-					plane = new WarPlane(100, 1000, newColor);
-				    hangar.addMultiplyPlane(plane, k);
-					panelHangar.repaint();
-				}
-			}
-		});
-		frame.getContentPane().add(btnNewButton_2);
-		btnNewButton_2.setBounds(1070, 85, 167, 25);	
-		
-		btnNewButton = new JButton("Добавить несколько");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int k = 3;
-				ITransport plane;
-				Color newColor = JColorChooser.showDialog(frame, "Выберите основной цвет", Color.gray);
-				if (newColor != null) {
-
-				for (int i = 0; i<k; i++){
-				plane = new WarPlane(100, 1000, newColor);
-				int place = hangar.addPlane(plane);
-				panelHangar.repaint();
-				}
-				}
-			}
-		});
-		JButton button = new JButton("Добавить несколько");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Color mainColor = JColorChooser.showDialog(frame, "Выберите основной цвет", Color.gray);
-				if (mainColor != null) {
-					Color dopColor = JColorChooser.showDialog(frame, "Выберите дополонительный цвет", Color.red);
-					if (dopColor != null) {
-						plane = new BomberPlane(100, 100, 
-								mainColor, dopColor, 10, true, true);
-						int k = 3;
-						hangar.addMultiplyPlane(plane, k);
-						panelHangar.repaint();
-					}					
-				}
-			}
-		});
-		button.setBounds(1070, 147, 167, 23);
-		frame.getContentPane().add(button);
-	}
+}
