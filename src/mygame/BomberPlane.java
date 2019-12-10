@@ -19,7 +19,7 @@ public class BomberPlane extends WarPlane {
         DopColor = dopColor;
         Bombs = bombs;
         Shoot = shoot;
-        BackBombs = backBombs;
+        BackBombs = backBombs; 
 	}
 	public BomberPlane(String config, String decksTypeConfig) {
 		super(config);
@@ -79,7 +79,6 @@ public class BomberPlane extends WarPlane {
 		case 6:
 		break;
 		case 7:
-		
 			g.setColor(Color.BLACK);
 			g2.drawOval(_startPosX + 83/a, _startPosY - 18/a, 15/a, 10/a);
 				
@@ -107,7 +106,6 @@ public class BomberPlane extends WarPlane {
 			g2.fillOval(_startPosX + 80/a, _startPosY + 5/a, 15/a, 10/a);
 			g2.fillOval(_startPosX + 80/a, _startPosY + 90/a, 15/a, 10/a); 
 			break;
-			
 		case 10:
 			g.setColor(Color.BLACK);
 			g2.drawOval(_startPosX + 83/a, _startPosY - 18/a, 15/a, 10/a);
@@ -121,7 +119,7 @@ public class BomberPlane extends WarPlane {
 			g2.fillOval(_startPosX + 80/a, _startPosY + 90/a, 15/a, 10/a);
 			g2.fillOval(_startPosX + 83/a, _startPosY + 112/a, 15/a, 10/a); 
 		break;
-		}	
+		}
 	 }
 	 super.DrawPlane(g);
 	 if (Shoot)
@@ -133,26 +131,12 @@ public class BomberPlane extends WarPlane {
          g.fillRect( _startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
      }
 	 if (BackBombs){
-	    Color myDopColor =  new Color(204, 0, 0);
-		planepatches.Draw(g, myDopColor, _startPosX, _startPosY);		
-	 }
-	 }
-	 super.DrawPlane(g);
-	 if (Shoot)
-     { 	 g.setColor(DopColor);
-         g.drawRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
-         g.drawRect(_startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
-         
-         g.fillRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
-         g.fillRect( _startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
-     }
-	 if (BackBombs){
-		 	g.setColor(Color.RED);
-			g.drawOval(_startPosX +29/a, _startPosY + 15/a, 33/a, 12/a); //
+		     g.setColor(Color.RED);
+			g.drawOval(_startPosX +29/a, _startPosY + 15/a, 33/a, 12/a); 
 	        g.drawOval(_startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);
 	      
 	        g.fillOval(_startPosX + 29/a, _startPosY + 15/a, 33/a, 12/a);
-	        g.fillOval( _startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);	
+	        g.fillOval( _startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);
 	 }
 	}
     public void MoveTransport(Direction direction)
@@ -184,7 +168,7 @@ public class BomberPlane extends WarPlane {
                 break;
         }
     }
- @Override
+    @Override
     public ITransport Clone(){
     	ITransport tr = new BomberPlane(this.MaxSpeed, this.Weight, this.MainColor, this.DopColor,
     			this.Bombs, this.Shoot, this.BackBombs);
