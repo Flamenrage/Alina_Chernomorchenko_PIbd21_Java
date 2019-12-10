@@ -49,10 +49,8 @@ public class PlaneMiddle implements IPatch{
 			g.setColor(Color.RED);
 	         g.drawOval(startPosX +29/a, startPosY + 15/a, 33/a, 12/a); 
 	         g.drawOval(startPosX + 29/a, startPosY + 83/a, 33/a, 12/a);
-	      
 	         g.fillOval(startPosX + 29/a, startPosY + 15/a, 33/a, 12/a);
 	         g.fillOval( startPosX + 29/a, startPosY + 83/a, 33/a, 12/a);
-
 			break;
 		case Two:
 			g.setColor(color);
@@ -82,7 +80,6 @@ public class PlaneMiddle implements IPatch{
 			g.setColor(Color.RED);
 			 g.drawOval(startPosX +29/a, startPosY + 15/a, 33/a, 12/a);
 	         g.drawOval(startPosX + 29/a, startPosY + 83/a, 33/a, 12/a);
-	      
 	         g.fillOval(startPosX + 29/a, startPosY + 15/a, 33/a, 12/a);
 	         g.fillOval( startPosX + 29/a, startPosY + 83/a, 33/a, 12/a);
 			break;

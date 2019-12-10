@@ -40,7 +40,6 @@ public class Main {
 			}
 		});
 	}
-
 	private void createNewPlane() {
 		
 		plane = new WarPlane((int)(Math.random() * 200) + 50, (int)(Math.random() * 500) + 100, Color.GRAY);			
@@ -64,12 +63,9 @@ public class Main {
 		return (int)(Math.random() * ++max) + min;
 	}
 	Random rnd = new Random();
-	
 	public Main() {
 		initialize();
-		
 	}
-
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 918, 716);
@@ -90,7 +86,6 @@ public class Main {
 											
 					}
 				});
-				
 			}
 		});
 		buttonCreateNewBomberPlane.setBounds(28, 557, 201, 42);
@@ -107,9 +102,7 @@ public class Main {
 		}); buttonCreateNewPlane.setBounds(241, 557, 201, 42); frame.getContentPane().add(buttonCreateNewPlane);
 		
 		buttonUp = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\up.png"));
-		buttonUp = new JButton(new ImageIcon("D:\\������\\����������������\\����� �����\\up.png"));
 		buttonUp.setEnabled(false);
-		buttonUp = new JButton(new ImageIcon("D:\\������\\����������������\\����� �����\\up.png"));
 		buttonUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				plane.MoveTransport(Direction.Up);
@@ -119,13 +112,8 @@ public class Main {
 		
 		buttonUp.setBounds(780, 557, 42, 42);
 		frame.getContentPane().add(buttonUp);
-		
-		
 		buttonLeft = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\left.png"));
-		buttonLeft = new JButton(new ImageIcon("D:\\������\\����������������\\����� �����\\left.png"));
-
 		buttonLeft.setEnabled(false);
-		JButton buttonLeft = new JButton(new ImageIcon("D:\\������\\����������������\\����� �����\\left.png"));
 		buttonLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				plane.MoveTransport(Direction.Left);
@@ -136,23 +124,17 @@ public class Main {
 		frame.getContentPane().add(buttonLeft);
 		
 		buttonRight = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\right.png"));
-		buttonRight = new JButton(new ImageIcon("D:\\������\\����������������\\����� �����\\right.png"));
 		buttonRight.setEnabled(false);
-		JButton buttonRight = new JButton(new ImageIcon("D:\\������\\����������������\\����� �����\\right.png"));
 		buttonRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				plane.MoveTransport(Direction.Right);
 				panel.repaint();
 			}
 		});
-		
 		buttonRight.setBounds(822, 599, 42, 42);
 		frame.getContentPane().add(buttonRight);
-
 		buttonDown = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\down.png"));
-		buttonDown = new JButton(new ImageIcon("D:\\������\\����������������\\����� �����\\down.png"));
 		buttonDown.setEnabled(false);
-		JButton buttonDown = new JButton(new ImageIcon("D:\\������\\����������������\\����� �����\\down.png"));
 
 		buttonDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -160,8 +142,6 @@ public class Main {
 				panel.repaint();
 			}
 		});
-	
-		
 		buttonDown.setBounds(780, 599, 42, 42);
 		frame.getContentPane().add(buttonDown);
 		
@@ -174,17 +154,14 @@ public class Main {
 						plane = new BomberPlane(rnd(100, 400), rnd(1000, 1500), Color.GRAY,
 								Color.RED, 10, true);
 						panel = new PlaneDraw(plane);
-						
 						panel.setSize(BOARDS_WIDTH, BOARDS_HEIGHT);
 						
 						frame.getContentPane().add(panel);
 						plane.SetPosition(500, 100, BOARDS_WIDTH,
 								BOARDS_HEIGHT);
-						panel.repaint();					
-						
+						panel.repaint();						
 					}
 				});
-				
 			}
 		});
 		
@@ -213,4 +190,3 @@ public class Main {
 		label.setBounds(12, 559, 170, 16);
 		frame.getContentPane().add(label);
 	}
-}

@@ -10,7 +10,6 @@ public class PanelParking extends JPanel {
 		public PanelParking(Parking<ITransport, IPatch> parking) {
 			this.parking = parking;
 		}
-		
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
