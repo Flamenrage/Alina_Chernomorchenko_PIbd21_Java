@@ -43,6 +43,11 @@ public class Parking<T extends ITransport, U extends IPatch> {
         setPictureWidth(pictureWidth);
         setPictureHeight(pictureHeight);
         this.maxCount = sizes;
+        for (int i = 0; i < places.length; i++)
+        {
+            places[i] = null;
+            placesPatches[i] = null;
+        }
     }
     public int addPlane(T plane) {
     	for (int i = 0; i < maxCount; i++)
@@ -83,8 +88,6 @@ public class Parking<T extends ITransport, U extends IPatch> {
     		Remove(i);
 		}
     }
-   
-   
     public int addPlane(T plane, U patches) {
     	for (int i = 0; i < maxCount; i++)
         {
@@ -101,7 +104,6 @@ public class Parking<T extends ITransport, U extends IPatch> {
         }
         return -1;
     }
-   
     public U RemovePatches(int index) {
     	if (index < 0 || index > maxCount)
         {

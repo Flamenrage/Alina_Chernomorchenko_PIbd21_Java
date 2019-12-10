@@ -39,6 +39,7 @@ public class PlaneBack implements IPatch {
 	public void Draw(Graphics g, Color color, int startPosX, int startPosY) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(5.0f));
+
 		int a = 2;
 		switch (numberOfPatches) {
 		case One:
@@ -58,6 +59,8 @@ public class PlaneBack implements IPatch {
 			g.setColor(color);
 			g.drawOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a); 
 			g.drawOval(startPosX + 105/a, startPosY + 85 /a, 20/a, 30/a); 
+			g.drawOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a); // ������� �������
+			g.drawOval(startPosX + 105/a, startPosY + 85 /a, 20/a, 30/a); // ������ �������
 			g.setColor( new Color(255, 255, 0)); 
 			g.fillOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a);
 			g.fillOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a);
@@ -70,6 +73,11 @@ public class PlaneBack implements IPatch {
 			g.drawOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a);
 			g.setColor( new Color(255, 255, 0)); 
 			g.fillOval(startPosX + 50/a, startPosY + 40/a, 30/a, 20/a); 
+			g.drawOval(startPosX + 50/a, startPosY + 40/a, 30/a, 20/a); // ���
+			g.drawOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a); // ������� �������
+			g.drawOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a); // ������ �������
+			g.setColor( new Color(255, 255, 0)); 
+			g.fillOval(startPosX + 50/a, startPosY + 40/a, 30/a, 20/a); // ������
 			g.fillOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a);
 			g.fillOval(startPosX + 105/a, startPosY + 85 /a, 20/a, 30/a);
 			g.setColor(Color.RED);

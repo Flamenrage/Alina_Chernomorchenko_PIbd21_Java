@@ -49,15 +49,15 @@ public class PlaneMiddle implements IPatch{
 			g.setColor(Color.RED);
 	         g.drawOval(startPosX +29/a, startPosY + 15/a, 33/a, 12/a); 
 	         g.drawOval(startPosX + 29/a, startPosY + 83/a, 33/a, 12/a);
-	      
 	         g.fillOval(startPosX + 29/a, startPosY + 15/a, 33/a, 12/a);
 	         g.fillOval( startPosX + 29/a, startPosY + 83/a, 33/a, 12/a);
-
 			break;
 		case Two:
 			g.setColor(color);
 			g.drawOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a); 
 			g.drawOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a);
+			g.drawOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a); // ������� �������
+			g.drawOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a); // ������ �������
 			g.setColor( new Color(255,0, 255)); 
 			g.fillOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a);
 			g.fillOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a);
@@ -70,12 +70,16 @@ public class PlaneMiddle implements IPatch{
 			g.drawOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a); 
 			g.setColor( new Color(255, 0, 255)); 
 			g.fillOval(startPosX + 50/a, startPosY + 40/a, 30/a, 20/a); 
+			g.drawOval(startPosX + 50/a, startPosY + 40/a, 30/a, 20/a); // ���
+			g.drawOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a); // ������� �������
+			g.drawOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a); // ������ �������
+			g.setColor( new Color(255, 0, 255)); 
+			g.fillOval(startPosX + 50/a, startPosY + 40/a, 30/a, 20/a); // ������
 			g.fillOval(startPosX + 105/a, startPosY - 6/a, 20/a, 30/a);
 			g.fillOval(startPosX + 105/a, startPosY + 85/a , 20/a, 30/a);
 			g.setColor(Color.RED);
 			 g.drawOval(startPosX +29/a, startPosY + 15/a, 33/a, 12/a);
 	         g.drawOval(startPosX + 29/a, startPosY + 83/a, 33/a, 12/a);
-	      
 	         g.fillOval(startPosX + 29/a, startPosY + 15/a, 33/a, 12/a);
 	         g.fillOval( startPosX + 29/a, startPosY + 83/a, 33/a, 12/a);
 			break;
