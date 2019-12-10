@@ -59,5 +59,3 @@ public class DopColorTrHd extends TransferHandler {
 	return true;
 	}
 }
-
-
