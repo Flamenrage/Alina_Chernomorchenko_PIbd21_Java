@@ -23,6 +23,7 @@ import java.util.Hashtable;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JList;
+
 import java.awt.Font;
 
 public class ParkingMain {
@@ -79,6 +80,7 @@ public class ParkingMain {
 		frame.setBounds(100, 100, 1267, 620);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
 		hangar = new MultiLevelParking(countLevels,panelHangarWidth, panelHangarWidth);
 		bankPlane = new ArrayList<>();
 		bankPatches = new ArrayList<>();
@@ -108,7 +110,7 @@ public class ParkingMain {
 		});
 		frame.getContentPane().add(list);
 		frame.getContentPane().add(panelHangar);
-		JButton btnAddPlane = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
+    	JButton btnAddPlane = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
 		btnAddPlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PlaneConfig configFrame = new PlaneConfig();
@@ -130,9 +132,7 @@ public class ParkingMain {
 		buttonTakePlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textFieldIndex.getText() != "") {
-					
 					plane = hangar.getPlane(list.getSelectedIndex(),Integer.parseInt(textFieldIndex.getText()));
-					
 					if (plane != null) {
 						panelTake.clear();
 						bankPlane.set(bankIndex, plane);
