@@ -47,7 +47,6 @@ public class PlaneConfig {
 			}
 		});
 	}
-
 	public void initializeConfig(PanelParking thisHangarPanel, MultiLevelParking thisHangar,
 			JList<String> thisList) {
 		this.thisHangarPanel = thisHangarPanel;
@@ -60,7 +59,6 @@ public class PlaneConfig {
 	public PlaneConfig() {
 		initialize();
 	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */

@@ -136,7 +136,7 @@ public class BomberPlane extends WarPlane {
 	    Color myDopColor =  new Color(204, 0, 0);
 		planepatches.Draw(g, myDopColor, _startPosX, _startPosY);		
 	 }
-	 }
+	 
 	 super.DrawPlane(g);
 	 if (Shoot)
      { 	 g.setColor(DopColor);
@@ -162,7 +162,6 @@ public class BomberPlane extends WarPlane {
             case Right:
                 if (_startPosX + step < _pictureWidth - planeWidth) {
                     _startPosX += step;
-
                 }
                 break;
             case Left:

@@ -29,7 +29,6 @@ public class ConfigPanelTrHd  extends TransferHandler {
 		if(!supp.isDrop()) {
 			return false;
 		}	
-
 		ConfigPanel panelPlane = (ConfigPanel)supp.getComponent();
 		String data;
 		try {

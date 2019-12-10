@@ -58,6 +58,5 @@ public class MainColorTrHd extends TransferHandler {
 	}
 	panel.repaint();
 	return true;
-}
-
+	}
 }
