@@ -43,11 +43,6 @@ public class Parking<T extends ITransport, U extends IPatch> {
         setPictureWidth(pictureWidth);
         setPictureHeight(pictureHeight);
         this.maxCount = sizes;
-        for (int i = 0; i < places.length; i++)
-        {
-            places[i] = null;
-            placesPatches[i] = null;
-        }
     }
     public int addPlane(T plane) {
     	for (int i = 0; i < maxCount; i++)
@@ -61,32 +56,6 @@ public class Parking<T extends ITransport, U extends IPatch> {
             }
         }
         return -1;
-    }
-	 public T Remove(int index) {
-	    	
-		 if (index < 0 || index> maxCount)
-	        {
-	            return null;
-	        }
-	        if (places.containsKey(index))
-	        {
-	        	T plane = places.get(index);
-	            places.remove(index);
-	            return plane;
-	        }
-	        return null;
-	 }
-  
-    public void addMultiplyPlane (T plane, int k){
-    	for (int i = 0; i<k; i++){
-    		ITransport tr = plane.Clone();
-    		addPlane((T)tr);
-		}
-    }
-    public void RemoveMultiplyPlane (int k){
-    	for (int i = k+1; i<20; i++){
-    		Remove(i);
-		}
     }
     public int addPlane(T plane, U patches) {
     	for (int i = 0; i < maxCount; i++)
@@ -103,6 +72,20 @@ public class Parking<T extends ITransport, U extends IPatch> {
             }
         }
         return -1;
+    }
+    public T Remove(int index) {
+    	
+    	if (index < 0 || index> maxCount)
+        {
+            return null;
+        }
+        if (places.containsKey(index))
+        {
+        	T plane = places.get(index);
+            places.remove(index);
+            return plane;
+        }
+        return null;
     }
     public U RemovePatches(int index) {
     	if (index < 0 || index > maxCount)
@@ -123,25 +106,25 @@ public class Parking<T extends ITransport, U extends IPatch> {
     }
     public void Draw(Graphics g)
     {
-     DrawMarking(g);
-   	 for (int i = 0; i < maxCount; i++)
-       {
-           if (!CheckFreePlace(i))
-           {
-               places.get(i).DrawPlane(g);
-               if (placesPatches.containsKey(i)) {
-               	placesPatches.get(i).Draw(g, places.get(i).GetMainColor(), placesPatches.get(i).GetPositionX(),
-               			placesPatches.get(i).GetPositionY());
-               }
-           }
-       }        
+    	DrawMarking(g);
+    	 for (int i = 0; i < maxCount; i++)
+        {
+            if (!CheckFreePlace(i))
+            {
+                places.get(i).DrawPlane(g);
+                if (placesPatches.containsKey(i)) {
+                	placesPatches.get(i).Draw(g, places.get(i).GetMainColor(), placesPatches.get(i).GetPositionX(),
+                			placesPatches.get(i).GetPositionY());
+                }
+            }
+        }        
     }
     private void DrawMarking(Graphics g)
     {
     	Graphics2D g2 = (Graphics2D) g;
     	g2.setStroke((new BasicStroke(3f)));
         g2.drawRect(0, 0, (maxCount / 5) * placeSizeWidth, 500);
-        for (int i = 0; i < maxCount / 5; i++)
+        for (int i = 0; i <maxCount / 5; i++)
         {
             for (int j = 0; j < 6; j++)
             {
