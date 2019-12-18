@@ -104,23 +104,23 @@ public class BomberPlane extends WarPlane {
 		}	
 	 }
 	 super.DrawPlane(g);
-	 if (Shoot)
-     { 	 g.setColor(DopColor);
-         g.drawRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
-         g.drawRect(_startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
-         
-         g.fillRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
-         g.fillRect( _startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
-     }
-	 if (BackBombs){
-		 	g.setColor(Color.RED);
+		 if (Shoot)
+	     { 	 g.setColor(DopColor);
+	         g.drawRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
+	         g.drawRect(_startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
+	         
+	         g.fillRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
+	         g.fillRect( _startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
+	     }
+		 if (BackBombs){
+			g.setColor(Color.RED);
 			g.drawOval(_startPosX +29/a, _startPosY + 15/a, 33/a, 12/a); //
-	        g.drawOval(_startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);
-	      
-	        g.fillOval(_startPosX + 29/a, _startPosY + 15/a, 33/a, 12/a);
-	        g.fillOval( _startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);	
-	 }
-	 }
+		    g.drawOval(_startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);
+		      
+		    g.fillOval(_startPosX + 29/a, _startPosY + 15/a, 33/a, 12/a);
+		    g.fillOval( _startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);	
+		}
+	}
     public void MoveTransport(Direction direction)
     {
         float step = MaxSpeed * 100 / Weight;
