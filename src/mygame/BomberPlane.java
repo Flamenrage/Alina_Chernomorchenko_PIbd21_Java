@@ -156,5 +156,4 @@ public class BomberPlane extends WarPlane {
     			this.Bombs, this.Shoot, this.BackBombs);
     	return tr;
     }
-
 }
