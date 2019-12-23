@@ -132,7 +132,6 @@ public class ParkingMain {
 					if (dopColor != null) {
 						plane = new BomberPlane(100, 100, 
 								mainColor, dopColor, 10, true, true);
-						
 						Random rnd = new Random();
 						switch (rnd.nextInt(3)) {
 							case 0:
@@ -154,9 +153,9 @@ public class ParkingMain {
 		buttonParkBomberPlane.setBounds(901, 131, 166, 55);
 		frame.getContentPane().add(buttonParkBomberPlane);
 		
-		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
-		label_1.setBounds(901, 267, 48, 14);
-		frame.getContentPane().add(label_1);
+		JLabel label_name = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
+		label_name.setBounds(901, 267, 48, 14);
+		frame.getContentPane().add(label_name);
 		
 		textFieldIndex = new JTextField();
 		textFieldIndex.setBounds(961, 264, 58, 20);
@@ -205,6 +204,4 @@ public class ParkingMain {
 		button_view_collection.setBounds(1015, 294, 119, 23);
 		frame.getContentPane().add(button_view_collection);
 	}
-	
-
 }
