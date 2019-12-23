@@ -26,15 +26,17 @@ public class Parking<T extends ITransport, U extends IPatch> {
 	}
 	private final int placeSizeWidth = 210;
     private final int placeSizeHeight = 100;
-    public T getPlace(int i) {
+    public T getPlace(int i) throws ParkingNotFoundException {
     	if (places.containsKey(i)){
-		return places.get(i);}
-    	 else return null;
+    		return places.get(i);
+		}
+    	throw new ParkingNotFoundException(i);
 	}
 	public U getPlacesPatches(int i) {
 		if (placesPatches.containsKey(i)){
-		return placesPatches.get(i);}
-		 else return null;    	
+			return placesPatches.get(i);
+		}
+		else return null;    	
 	}
 	public Parking(int sizes, int pictureWidth, int pictureHeight)
     {
@@ -44,7 +46,7 @@ public class Parking<T extends ITransport, U extends IPatch> {
         setPictureHeight(pictureHeight);
         this.maxCount = sizes;
     }
-    public int addPlane(T plane) {
+    public int addPlane(T plane) throws ParkingOverflowException {
     	for (int i = 0; i < maxCount; i++)
         {
             if (CheckFreePlace(i))
@@ -55,18 +57,18 @@ public class Parking<T extends ITransport, U extends IPatch> {
                 return i;
             }
         }
-        return -1;
+        throw new ParkingOverflowException();
     }
-    public int AddPlane(T plane, int index) {
+    public int AddPlane(T plane, int index) throws ParkingOccupiedPlaceException {
     	if (CheckFreePlace(index)) {
     		places.put(index, plane);
     		places.get(index).SetPosition(5 + index / 5 * placeSizeWidth + 15, 
                     index % 5 * placeSizeHeight + 21, pictureWidth, pictureHeight);
     		return index;
     	}
-    	return -1;
+    	throw new ParkingOccupiedPlaceException(index);
     }    
-    public int AddPlane(T plane, U patches, int index) {
+    public int AddPlane(T plane, U patches, int index) throws ParkingOccupiedPlaceException {
     	if (CheckFreePlace(index)) {
     		places.put(index, plane);
     		places.get(index).SetPosition(5 + index / 5 * placeSizeWidth + 15, 
@@ -76,13 +78,13 @@ public class Parking<T extends ITransport, U extends IPatch> {
             		places.get(index).GetStartPosY());
     		return index;
     	}
-    	return -1;
+    	throw new ParkingOccupiedPlaceException(index);
     }
-	 public T Remove(int index) {
+	 public T Remove(int index)  throws ParkingNotFoundException {
 	    	
 		 if (index < 0 || index> maxCount)
 	        {
-	            return null;
+			 throw new ParkingNotFoundException(index);
 	        }
 	        if (places.containsKey(index))
 	        {
@@ -90,7 +92,7 @@ public class Parking<T extends ITransport, U extends IPatch> {
 	            places.remove(index);
 	            return plane;
 	        }
-	        return null;
+	        throw new ParkingNotFoundException(index);
 	 }
   
     public void addMultiplyPlane (T plane, int k){
@@ -105,7 +107,7 @@ public class Parking<T extends ITransport, U extends IPatch> {
 		}
     }
    
-    public int addPlane(T plane, U patches) {
+    public int addPlane(T plane, U patches) throws ParkingOverflowException  {
     	for (int i = 0; i < maxCount; i++)
         {
             if (CheckFreePlace(i))
@@ -119,7 +121,7 @@ public class Parking<T extends ITransport, U extends IPatch> {
                 return i;
             }
         }
-        return -1;
+    	throw new ParkingOverflowException();
     }
    
     public U RemovePatches(int index) {

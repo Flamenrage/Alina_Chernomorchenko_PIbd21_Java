@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MultiLevelParking {
@@ -26,12 +27,17 @@ public class MultiLevelParking {
 		}
 		return null;
 	}
-	public ITransport getPlane(int i, int j) {
+	public ITransport getPlane(int i, int j) throws ParkingNotFoundException {
 		if((i > -1) && (i < hangarLevels.size())) {
 			if((j > -1) && (j < hangarLevels.get(i).maxCount)) {
 				ITransport plane = hangarLevels.get(i).getPlace(j);
-				hangarLevels.get(i).Remove(j);
-				return plane;
+				try {
+					hangarLevels.get(i).Remove(j);
+					return plane;
+				}
+				catch(ParkingNotFoundException ex) {
+					throw new ParkingNotFoundException(j);
+				}
 			}
 		}
 		return null;
@@ -46,8 +52,9 @@ public class MultiLevelParking {
 		}
 		return null;
 	}
-	public boolean loadData(String fileName) {
+	public boolean loadData(String fileName) throws IOException, ParkingOccupiedPlaceException {
 		String buffer = "";
+		int counter = -1;
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			buffer = br.readLine();
@@ -59,7 +66,6 @@ public class MultiLevelParking {
 				br.close();
 				return false;
 			}
-			int counter = -1;
 			while (br.ready()) {
 				buffer = br.readLine();
 				ITransport plane = null;
@@ -80,13 +86,14 @@ public class MultiLevelParking {
 				}
 			}
 			br.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return false;
+		} catch (ParkingOccupiedPlaceException | IOException ex) {
+			if (ex instanceof ParkingOccupiedPlaceException) {
+				throw new ParkingOccupiedPlaceException(counter);
+			} else throw new IOException();
 		}
 		return true;
 	}
-	public boolean loadLevelData(String fileName, int index) {
+	public boolean loadLevelData(String fileName, int index) throws IOException, ParkingOccupiedPlaceException {
 		String buffer = "";
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -113,13 +120,14 @@ public class MultiLevelParking {
 				}
 			}
 			br.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return false;
+		}  catch (ParkingOccupiedPlaceException ex) {
+			throw ex;			
+		} catch (IOException ex) {
+			throw ex;
 		}
 		return true;
 	}
-	public boolean saveData(String fileName) {
+	public void saveData(String fileName) throws IOException {
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
 			bw.write("CountLevels:" + hangarLevels.size());
@@ -148,48 +156,38 @@ public class MultiLevelParking {
 				}
 			}
 			bw.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return false;
-		}
-		return true;
+		} catch (IOException ex) {
+			throw ex;
+	   }
 	}
-	public boolean saveLevelData(String fileName, int index) {
+	public void saveLevelData(String fileName, int index) throws IOException {
 		try {
-			if ((index > hangarLevels.size())||(index < 0)){
-				return false;
-			}
 			BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
 			bw.write("SingleLevel");
 			bw.newLine();
 			Parking<ITransport, IPatch> level = hangarLevels.get(index);
-			
 			for (int i = 0; i < countPlaces; i++) {
-				ITransport plane = level.getPlace(i);
-				if (plane != null) {
-					if (!(plane instanceof BomberPlane)) {
-						bw.write(i + ":WarPlane:" + plane.getConfig());
+				ITransport ship = level.getPlace(i);
+				if (ship != null) {
+					if (!(ship instanceof BomberPlane)) {
+						bw.write(i + ":WarPlane:" + ship.getConfig());
 						bw.newLine();
 					} else {
-						IPatch patches = level.getPlacesPatches(i);
-						if (patches != null) {
-							bw.write(i + ":BomberPlane:" + patches.toString() + ":" + 
-									plane.getConfig());
+						IPatch decks = level.getPlacesPatches(i);
+						if (decks != null) {
+							bw.write(i + ":BomberPlane:" + decks.toString() + ":" + 
+									ship.getConfig());
 						} else {
 							bw.write(i + ":BomberPlane:" + "PlanePatches" + ":" +
-									plane.getConfig());
+									ship.getConfig());
 						}
 						bw.newLine();
 					}
 				}
 			}
 			bw.close();
-			
-		} 
-		catch (Exception ex) {
-			ex.printStackTrace();
-			return false;
+		} catch (IOException ex) {
+			throw ex;
 		}
-		return true;
 	}
 }
