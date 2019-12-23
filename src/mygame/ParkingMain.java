@@ -35,7 +35,7 @@ public class ParkingMain {
 	private JLabel ParkLabel;
 	private JPanel panel;
 	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+	private JButton btnTakeSeveral;
 	/**
 	 * Launch the application.
 	 */
@@ -111,9 +111,9 @@ public class ParkingMain {
 		buttonParkBomberPlane.setBounds(901, 131, 166, 55);
 		frame.getContentPane().add(buttonParkBomberPlane);
 		
-		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
-		label_1.setBounds(901, 267, 48, 14);
-		frame.getContentPane().add(label_1);
+		JLabel label_name = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
+		label_name.setBounds(901, 267, 48, 14);
+		frame.getContentPane().add(label_name);
 		
 		textFieldIndex = new JTextField();
 		textFieldIndex.setBounds(961, 264, 58, 20);
@@ -163,8 +163,8 @@ public class ParkingMain {
 		panel.setBounds(892, 238, 208, 295);
 		frame.getContentPane().add(panel);
 	
-		btnNewButton_1 = new JButton("Убрать несколько");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnTakeSeveral = new JButton("Убрать несколько");
+		btnTakeSeveral.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textFieldIndex.getText() != "") {
 					panelTake.clear();		
@@ -180,11 +180,11 @@ public class ParkingMain {
 					}
 				}
 		});
-		btnNewButton_1.setBounds(901, 529, 147, 25);
-		frame.getContentPane().add(btnNewButton_1);
+		btnTakeSeveral.setBounds(901, 529, 147, 25);
+		frame.getContentPane().add(btnTakeSeveral);
 		
-		JButton btnNewButton_2 = new JButton("Добавить несколько");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton btnAddSeveral = new JButton("Добавить несколько");
+		btnAddSeveral.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int k = 3;
 				ITransport plane;
@@ -196,27 +196,10 @@ public class ParkingMain {
 				}
 			}
 		});
-		frame.getContentPane().add(btnNewButton_2);
-		btnNewButton_2.setBounds(1070, 85, 167, 25);	
-		
-		btnNewButton = new JButton("Добавить несколько");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int k = 3;
-				ITransport plane;
-				Color newColor = JColorChooser.showDialog(frame, "Выберите основной цвет", Color.gray);
-				if (newColor != null) {
-
-				for (int i = 0; i<k; i++){
-				plane = new WarPlane(100, 1000, newColor);
-				int place = hangar.addPlane(plane);
-				panelHangar.repaint();
-				}
-				}
-			}
-		});
-		JButton button = new JButton("Добавить несколько");
-		button.addActionListener(new ActionListener() {
+		frame.getContentPane().add(btnAddSeveral);
+		btnAddSeveral.setBounds(1070, 85, 167, 25);	
+		JButton buttonAddSeveralUpgrade = new JButton("Добавить несколько");
+		buttonAddSeveralUpgrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Color mainColor = JColorChooser.showDialog(frame, "Выберите основной цвет", Color.gray);
 				if (mainColor != null) {
@@ -231,7 +214,7 @@ public class ParkingMain {
 				}
 			}
 		});
-		button.setBounds(1070, 147, 167, 23);
-		frame.getContentPane().add(button);
+		buttonAddSeveralUpgrade.setBounds(1070, 147, 167, 23);
+		frame.getContentPane().add(buttonAddSeveralUpgrade);
 	}
 }
