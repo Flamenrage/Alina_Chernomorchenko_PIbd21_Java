@@ -69,7 +69,6 @@ public class ParkingMain {
 	 */
 	public ParkingMain() {
 		initialize();
-		//initializeHangarPanel();
 	}
 	/**
 	 * Initialize the contents of the frame.
@@ -121,9 +120,10 @@ public class ParkingMain {
 		});
 		btnAddPlane.setBounds(892, 169, 147, 44);
 		frame.getContentPane().add(btnAddPlane);
-		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
-		label_1.setBounds(901, 267, 48, 14);
-		frame.getContentPane().add(label_1);
+		JLabel label_name = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
+		label_name.setBounds(901, 267, 48, 14);
+		frame.getContentPane().add(label_name);
+
 		textFieldIndex = new JTextField();
 		textFieldIndex.setBounds(961, 264, 58, 20);
 		frame.getContentPane().add(textFieldIndex);
