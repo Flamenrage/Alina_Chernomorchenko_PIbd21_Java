@@ -10,12 +10,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JFrame;
+
 import javax.swing.JPanel;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -32,12 +37,18 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.util.Hashtable;
+
+import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+import javax.swing.JList;
+
+import java.awt.Font;
 
 public class ParkingMain {
-	
 	private final int panelHangarWidth = 870;
 	private final int panelHangarHeight = 560;
+
 	private final int countLevels = 5;
 	private MultiLevelParking hangar;
 	private ArrayList<ITransport> bankPlane;
@@ -48,8 +59,14 @@ public class ParkingMain {
 	private JFrame frame;
 	private JTextField textFieldIndex;
 	private PanelParking panelHangar;
+	private JButton buttonParkPlane;
+	private JButton buttonParkBomberPlane;
 	private JButton buttonTakePlane;
 	private PlaneTakePanel panelTake;
+	private JLabel ParkLabel;
+	private JPanel panel;
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
 	private JList<String> list;
 	private Logger logger;
 	private Logger logger_error;
@@ -74,6 +91,7 @@ public class ParkingMain {
 	public ParkingMain() throws ParkingNotFoundException, ParkingOverflowException, 
 	SecurityException, IOException, ParkingOccupiedPlaceException {
 		initialize();
+		//initializeHangarPanel();
 	}
 	/**
 	 * Initialize the contents of the frame.
@@ -104,6 +122,7 @@ public class ParkingMain {
 		frame.setBounds(100, 100, 1270, 654);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
 		hangar = new MultiLevelParking(countLevels,panelHangarWidth, panelHangarWidth);
 		bankPlane = new ArrayList<>();
 		bankPatches = new ArrayList<>();
@@ -180,7 +199,7 @@ public class ParkingMain {
 				logger_error.warning("Ошибка");
 				JOptionPane.showMessageDialog(frame, "Ошибка",
 						"Exception", JOptionPane.ERROR_MESSAGE);
-			} 
+			 } 
 		  }
 		});
 		menuFile.add(itemLoadAll);
@@ -200,7 +219,7 @@ public class ParkingMain {
 			 catch (Exception e1) {						
 				    logger_error.warning("Ошибка при сохранении");
 					JOptionPane.showMessageDialog(null, "Ошибка при сохранении");
-			}
+			 }
 		  }
 		});
 
@@ -246,7 +265,7 @@ public class ParkingMain {
 				logger_error.warning("Ошибка при сохранении уровня");
 				JOptionPane.showMessageDialog(frame, "Ошибка при сохранении уровня",
 						"Exception", JOptionPane.ERROR_MESSAGE);
-			}
+			 }
 		  }
 		});
 		menuFile.add(menuItemSaveLevel);
@@ -254,12 +273,10 @@ public class ParkingMain {
 		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
 		label_1.setBounds(901, 267, 48, 14);
 		frame.getContentPane().add(label_1);
-		
 		textFieldIndex = new JTextField();
 		textFieldIndex.setBounds(961, 264, 58, 20);
 		frame.getContentPane().add(textFieldIndex);
 		textFieldIndex.setColumns(10);
-		
 		buttonTakePlane = new JButton("\u0417\u0430\u0431\u0440\u0430\u0442\u044C");
 		buttonTakePlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -296,7 +313,6 @@ public class ParkingMain {
 		});
 		buttonTakePlane.setBounds(901, 294, 119, 23);
 		frame.getContentPane().add(buttonTakePlane);
-		
 		panelTake = new PlaneTakePanel();
 		panelTake.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelTake.setBounds(901, 330, 185, 186);

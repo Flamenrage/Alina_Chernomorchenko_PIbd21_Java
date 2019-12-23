@@ -146,7 +146,6 @@ public class BomberPlane extends WarPlane {
             case Right:
                 if (_startPosX + step < _pictureWidth - planeWidth) {
                     _startPosX += step;
-
                 }
                 break;
             case Left:
