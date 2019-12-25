@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 public class BomberPlane extends WarPlane {
 
-
 	public Color DopColor;
     public int Bombs;
     public boolean Shoot;
@@ -22,7 +21,6 @@ public class BomberPlane extends WarPlane {
         Bombs = bombs;
         Shoot = shoot;
         BackBombs = backBombs;
-        planepatches = new PlanePatches(3);
 	}
 	public void DrawPlane(Graphics g)
 	{
@@ -41,9 +39,7 @@ public class BomberPlane extends WarPlane {
 	g2.drawOval(_startPosX + 140/a, _startPosY + 105/a, 15/a, 10/a);
 	g2.drawOval(_startPosX + 140/a, _startPosY + 80/a, 15/a, 10/a);
 	
-	
 	g.setColor(DopColor);
-	
 	
 	g2.fillOval(_startPosX + 133/a, _startPosY - 30/a, 15/a, 10/a);
 	g2.fillOval(_startPosX + 140/a, _startPosY - 5/a, 15/a, 10/a);
@@ -59,13 +55,11 @@ public class BomberPlane extends WarPlane {
 		case 6:
 		break;
 		case 7:
-		
 			g.setColor(Color.BLACK);
 			g2.drawOval(_startPosX + 83/a, _startPosY - 18/a, 15/a, 10/a);
 				
 			g.setColor(DopColor);
 			g2.fillOval(_startPosX + 83/a, _startPosY - 18/a, 15/a, 10/a);
-			
 		break;
 		case 8:
 			g.setColor(Color.BLACK);
@@ -100,24 +94,27 @@ public class BomberPlane extends WarPlane {
 			g2.fillOval(_startPosX + 80/a, _startPosY + 5/a, 15/a, 10/a);
 			g2.fillOval(_startPosX + 80/a, _startPosY + 90/a, 15/a, 10/a);
 			g2.fillOval(_startPosX + 83/a, _startPosY + 112/a, 15/a, 10/a); 
-		break;
-			
+		break;			
 		}	
 	 }
 	 super.DrawPlane(g);
-	 if (Shoot)
-     { 	 g.setColor(DopColor);
-         g.drawRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
-         g.drawRect(_startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
-         
-         g.fillRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
-         g.fillRect( _startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
-     }
-	 if (BackBombs){
-	    Color myDopColor =  new Color(204, 0, 0);
-		planepatches.Draw(g, myDopColor, _startPosX, _startPosY);		
-	 }
-	 }
+		 if (Shoot)
+	     { 	 g.setColor(DopColor);
+	         g.drawRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
+	         g.drawRect(_startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
+	         
+	         g.fillRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
+	         g.fillRect( _startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
+	     }
+		 if (BackBombs){
+		    g.setColor(Color.RED);
+		    g.drawOval(_startPosX +29/a, _startPosY + 15/a, 33/a, 12/a); //
+		    g.drawOval(_startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);
+		      
+		    g.fillOval(_startPosX + 29/a, _startPosY + 15/a, 33/a, 12/a);
+		    g.fillOval( _startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);	
+		}
+	}
     public void MoveTransport(Direction direction)
     {
         float step = MaxSpeed * 100 / Weight;

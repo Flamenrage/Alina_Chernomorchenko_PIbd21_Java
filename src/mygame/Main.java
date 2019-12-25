@@ -33,6 +33,7 @@ public class Main {
 			public void run() {
 				try {
 					Main window = new Main();
+
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -133,6 +134,8 @@ public class Main {
 		});
 		buttonRight.setBounds(822, 599, 42, 42);
 		frame.getContentPane().add(buttonRight);
+		buttonRight.setBounds(822, 599, 42, 42);
+		frame.getContentPane().add(buttonRight);
 		buttonDown = new JButton(new ImageIcon("D:\\Универ\\программирование\\Новая папка\\down.png"));
 		buttonDown.setEnabled(false);
 
@@ -141,7 +144,9 @@ public class Main {
 				plane.MoveTransport(Direction.Down);
 				panel.repaint();
 			}
-		});
+		});	
+		buttonDown.setBounds(780, 599, 42, 42);
+		frame.getContentPane().add(buttonDown);
 		buttonDown.setBounds(780, 599, 42, 42);
 		frame.getContentPane().add(buttonDown);
 		
