@@ -14,7 +14,19 @@ protected int _pictureHeight;
 public int MaxSpeed;
 public float Weight;
 public Color MainColor;
-
+public Color DopColor;
+public int GetStartPosX() {
+	return _startPosX;
+}
+public int GetStartPosY() {
+	return _startPosY;
+}
+public Color GetMainColor() {
+	return MainColor;
+}
+public Color GetDopColor() {
+	return DopColor;
+}
 public void SetPosition(int x, int y, int width, int height) {
     _startPosX = x;
     _startPosY = y;
@@ -24,5 +36,5 @@ public void SetPosition(int x, int y, int width, int height) {
 
 abstract public void MoveTransport(Direction direction);
 abstract public void DrawPlane(Graphics g);
-
+abstract public ITransport Clone();
 }

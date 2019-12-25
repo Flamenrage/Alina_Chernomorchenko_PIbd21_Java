@@ -1,5 +1,6 @@
 package mygame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public interface ITransport {
@@ -9,5 +10,9 @@ public interface ITransport {
     void MoveTransport(Direction direction);
 
 	void DrawPlane(Graphics g);
-
+	Color GetMainColor();
+    Color GetDopColor();
+    int GetStartPosX();
+    int GetStartPosY();
+    ITransport Clone();
 }
