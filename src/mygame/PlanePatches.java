@@ -91,7 +91,9 @@ public class PlanePatches implements IPatch  {
 		default:
 			break;
 		}
-		
 	}
-
+	@Override
+	public String toString() {
+		return "PlanePatches";
+	}
 }

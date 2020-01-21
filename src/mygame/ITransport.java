@@ -14,4 +14,5 @@ public interface ITransport {
     int GetStartPosX();
     int GetStartPosY();
     ITransport Clone();
+    String getConfig();
 }

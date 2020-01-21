@@ -18,6 +18,14 @@ public class WarPlane extends AirVehicle{
 	    Weight = weight;
 	    MainColor = mainColor;
     }
+    public WarPlane(String config) {
+    	String[] params = config.split(";");
+    	if (params.length == 3) {
+    		MaxSpeed = Integer.parseInt(params[0]);
+    		Weight = Float.parseFloat(params[1]);
+    		MainColor = new Color(Integer.parseInt(params[2]));
+    	}
+    }
     @Override
     public void MoveTransport(Direction direction)
     {
@@ -79,4 +87,7 @@ public class WarPlane extends AirVehicle{
     	ITransport tr = new WarPlane(this.MaxSpeed, this.Weight, this.MainColor);
     	return tr;
     }
+    public String getConfig() {
+		return (MaxSpeed + ";" + Weight + ";" + MainColor.getRGB());
+	}
 }

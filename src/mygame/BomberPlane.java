@@ -12,7 +12,7 @@ public class BomberPlane extends WarPlane {
     public int Bombs;
     public boolean Shoot;
     public boolean BackBombs;
-
+    IPatch patches;
 	public BomberPlane(int maxSpeed, float weight, Color mainColor, Color dopColor,
 			int bombs, boolean shoot, boolean backBombs) {
 		super(maxSpeed, weight, mainColor);
@@ -20,6 +20,31 @@ public class BomberPlane extends WarPlane {
         Bombs = bombs;
         Shoot = shoot;
         BackBombs = backBombs;
+	}
+	public BomberPlane(String config, String decksTypeConfig) {
+		super(config);
+		String[] params = config.split(";");
+		if (params.length == 7) {
+			MaxSpeed = Integer.parseInt(params[0]);
+    		Weight = Float.parseFloat(params[1]);
+    		MainColor = new Color(Integer.parseInt(params[2]));
+    		DopColor = new Color(Integer.parseInt(params[3]));    		
+    		Bombs = Integer.parseInt(params[4]);
+    		Shoot = Boolean.parseBoolean(params[5]);
+    		BackBombs = Boolean.parseBoolean(params[6]);
+    		switch (decksTypeConfig) {
+			case "PlanePatches":
+				patches = new PlanePatches(3);
+				break;
+			case "PlaneMiddle":
+				patches = new PlaneMiddle(3);
+				break;
+			case "PlaneBack":
+				patches = new PlaneBack(3);
+			default:
+				break;
+			}
+		}
 	}
 	public void DrawPlane(Graphics g)
 	{
@@ -142,10 +167,14 @@ public class BomberPlane extends WarPlane {
                 break;
         }
     }
-    @Override
+ @Override
     public ITransport Clone(){
     	ITransport tr = new BomberPlane(this.MaxSpeed, this.Weight, this.MainColor, this.DopColor,
     			this.Bombs, this.Shoot, this.BackBombs);
     	return tr;
     }
+    public String getConfig() {
+		return (super.getConfig() + ";" + DopColor.getRGB() + ";" + Bombs +
+				";" + Shoot + ";" + BackBombs); 
+	}
 }
