@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 public class BomberPlane extends WarPlane {
 
-	public Color DopColor;
     public int Bombs;
     public boolean Shoot;
     public boolean BackBombs;
@@ -94,11 +93,11 @@ public class BomberPlane extends WarPlane {
 			g2.fillOval(_startPosX + 80/a, _startPosY + 5/a, 15/a, 10/a);
 			g2.fillOval(_startPosX + 80/a, _startPosY + 90/a, 15/a, 10/a);
 			g2.fillOval(_startPosX + 83/a, _startPosY + 112/a, 15/a, 10/a); 
-		break;			
+		break;
 		}	
 	 }
 	 super.DrawPlane(g);
-		 if (Shoot)
+   if (Shoot)
 	     { 	 g.setColor(DopColor);
 	         g.drawRect(_startPosX + 30/a, _startPosY + 18/a, 25/a, 5/a);
 	         g.drawRect(_startPosX + 30/a, _startPosY + 85/a, 25/a, 5/a);
@@ -115,14 +114,13 @@ public class BomberPlane extends WarPlane {
 		    g.fillOval( _startPosX + 29/a, _startPosY + 83/a, 33/a, 12/a);	
 		}
 	}
-    public void MoveTransport(Direction direction)
-    {
+  public void MoveTransport(Direction direction)
+  {
         float step = MaxSpeed * 100 / Weight;
         switch (direction) {
             case Right:
                 if (_startPosX + step < _pictureWidth - planeWidth) {
                     _startPosX += step;
-
                 }
                 break;
             case Left:

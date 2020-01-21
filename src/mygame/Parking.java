@@ -27,12 +27,12 @@ public class Parking<T extends ITransport, U extends IPatch> {
 	private final int placeSizeWidth = 210;
     private final int placeSizeHeight = 100;
     public T getPlace(int i) {
-    	if (places.containsKey(i)){
+    	 if (places.containsKey(i)){
 		return places.get(i);}
     	 else return null;
 	}
 	public U getPlacesPatches(int i) {
-		if (placesPatches.containsKey(i)){
+		 if (placesPatches.containsKey(i)){
 		return placesPatches.get(i);}
 		 else return null;    	
 	}
@@ -86,7 +86,7 @@ public class Parking<T extends ITransport, U extends IPatch> {
             return plane;
         }
         return null;
-    }
+    } 
     public U RemovePatches(int index) {
     	if (index < 0 || index > maxCount)
         {

@@ -26,9 +26,7 @@ import javax.swing.JList;
 
 import java.awt.Font;
 
-
 public class ParkingMain {
-	
 	private final int panelHangarWidth = 870;
 	private final int panelHangarHeight = 560;
 
@@ -46,6 +44,10 @@ public class ParkingMain {
 	private JButton buttonParkBomberPlane;
 	private JButton buttonTakePlane;
 	private PlaneTakePanel panelTake;
+	private JLabel ParkLabel;
+	private JPanel panel;
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
 	private JList<String> list;
 	/**
 	 * Launch the application.
@@ -107,61 +109,25 @@ public class ParkingMain {
 		});
 		frame.getContentPane().add(list);
 		frame.getContentPane().add(panelHangar);
-		buttonParkPlane = new JButton("Самолет");
-		buttonParkPlane.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-		buttonParkPlane.addActionListener(new ActionListener() {
+    	JButton btnAddPlane = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
+		btnAddPlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Color newColor = JColorChooser.showDialog(frame, "Выберите основной цвет", Color.gray);
-				if (newColor != null) {
-					plane = new WarPlane(100, 1000, newColor);
-					int place = hangar.getHangar(list.getSelectedIndex()).addPlane(plane);
-					panelHangar.repaint();
-				}
+				PlaneConfig configFrame = new PlaneConfig();
+				configFrame.frame.setVisible(true);
+				configFrame.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				configFrame.initializeConfig(panelHangar, hangar, list);
 			}
 		});
-		buttonParkPlane.setBounds(901, 45, 166, 55);
-		frame.getContentPane().add(buttonParkPlane);
-		
-		buttonParkBomberPlane = new JButton("Бомбардировщик");
-		buttonParkBomberPlane.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		buttonParkBomberPlane.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Color mainColor = JColorChooser.showDialog(frame, "Выберите основной цвет", Color.gray);
-				if (mainColor != null) {
-					Color dopColor = JColorChooser.showDialog(frame, "Выберите дополонительный цвет", Color.red);
-					if (dopColor != null) {
-						plane = new BomberPlane(100, 100, 
-								mainColor, dopColor, 10, true, true);
-						Random rnd = new Random();
-						switch (rnd.nextInt(3)) {
-							case 0:
-								patch = new PlanePatches(3);
-								break;
-							case 1:
-								patch = new PlaneMiddle(3);
-								break;
-							case 2:
-								patch = new PlaneBack(3);
-								break;
-						}
-						int place = hangar.getHangar(list.getSelectedIndex()).addPlane(plane, patch);
-						panelHangar.repaint();
-					}					
-				}
-			}
-		});
-		buttonParkBomberPlane.setBounds(901, 131, 166, 55);
-		frame.getContentPane().add(buttonParkBomberPlane);
-		
+		btnAddPlane.setBounds(892, 169, 147, 44);
+		frame.getContentPane().add(btnAddPlane);
 		JLabel label_name = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
 		label_name.setBounds(901, 267, 48, 14);
 		frame.getContentPane().add(label_name);
-		
+
 		textFieldIndex = new JTextField();
 		textFieldIndex.setBounds(961, 264, 58, 20);
 		frame.getContentPane().add(textFieldIndex);
 		textFieldIndex.setColumns(10);
-		
 		buttonTakePlane = new JButton("\u0417\u0430\u0431\u0440\u0430\u0442\u044C");
 		buttonTakePlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -187,7 +153,6 @@ public class ParkingMain {
 		});
 		buttonTakePlane.setBounds(901, 294, 119, 23);
 		frame.getContentPane().add(buttonTakePlane);
-		
 		panelTake = new PlaneTakePanel();
 		panelTake.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelTake.setBounds(901, 330, 185, 186);
