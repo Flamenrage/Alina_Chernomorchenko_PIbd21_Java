@@ -6,6 +6,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
@@ -23,6 +24,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import java.awt.SystemColor;
+import java.util.logging.Logger;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.SimpleFormatter;
 public class PlaneConfig {
 
 	public JFrame frame;
@@ -31,7 +36,7 @@ public class PlaneConfig {
 	private PanelParking thisHangarPanel;
 	private MultiLevelParking thisHangar;
 	private JList<String> thisList;
-
+	private Logger logger_error;
 	/**
 	 * Launch the application.
 	 */
@@ -63,6 +68,19 @@ public class PlaneConfig {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		logger_error = Logger.getLogger("MyLog2");
+		try {
+			FileHandler fh_e = null;
+			fh_e = new FileHandler("C:\\temp\\file_error.txt");
+			logger_error.addHandler(fh_e);
+			logger_error.setUseParentHandlers(false);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fh_e.setFormatter(formatter);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		frame = new JFrame();
 		frame.setTitle("Drag&Drop");
 		frame.setBounds(100, 100, 594, 392);
@@ -154,16 +172,26 @@ public class PlaneConfig {
 		JButton btnAccept = new JButton("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C");
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if((panelPlane.getPlane() != null) && (panelPlane.getPatches() != null)) {
-					thisHangar.getHangar(thisList.getSelectedIndex()).addPlane(panelPlane.getPlane(), panelPlane.getPatches());
-					thisHangarPanel.repaint();
-				}else if((panelPlane.getPlane() != null) && (panelPlane.getPatches() == null)) {
-					thisHangar.getHangar(thisList.getSelectedIndex()).addPlane(panelPlane.getPlane());
+				try {
+					if((panelPlane.getPatches() != null)) {
+						thisHangar.getHangar(thisList.getSelectedIndex()).addPlane(panelPlane.getPlane(),
+						panelPlane.getPatches());
+					}
+					else {
+					    thisHangar.getHangar(thisList.getSelectedIndex()).addPlane(panelPlane.getPlane());
+					}
 					thisHangarPanel.repaint();
 				}
-				frame.dispose();
-			}
-		});
+				catch (ParkingOverflowException e1)
+				{
+					logger_error.warning("Переполнение");
+					JOptionPane.showMessageDialog(frame, e1.getMessage(),
+							"Ошибка", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			   frame.dispose();
+		}
+	});
 		btnAccept.setBounds(380, 207, 99, 23);
 		frame.getContentPane().add(btnAccept);
 		

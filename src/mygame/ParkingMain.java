@@ -11,7 +11,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
-
 import javax.swing.JPanel;
 import javax.swing.JDialog;
 import javax.swing.JButton;
@@ -26,13 +25,18 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.util.Hashtable;
 
 import javax.swing.border.TitledBorder;
@@ -64,6 +68,8 @@ public class ParkingMain {
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
 	private JList<String> list;
+	private Logger logger;
+	private Logger logger_error;
 	/**
 	 * Launch the application.
 	 */
@@ -82,14 +88,35 @@ public class ParkingMain {
 	/**
 	 * Create the application.
 	 */
-	public ParkingMain() {
+	public ParkingMain() throws ParkingNotFoundException, ParkingOverflowException, 
+	SecurityException, IOException, ParkingOccupiedPlaceException {
 		initialize();
 	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void initialize() {
+	private void initialize() throws SecurityException, ParkingNotFoundException, ParkingOverflowException, 
+	SecurityException, IOException, ParkingOccupiedPlaceException {
+		logger = Logger.getLogger("MyLog");
+		logger_error = Logger.getLogger("MyLog1");
+		try {
+			FileHandler fh = null;
+			FileHandler fh_e = null;
+			fh = new FileHandler("C:\\temp\\file_info.txt");
+			fh_e = new FileHandler("C:\\temp\\file_error.txt");
+			logger.addHandler(fh);
+			logger_error.addHandler(fh_e);
+			logger.setUseParentHandlers(false);
+			logger_error.setUseParentHandlers(false);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fh.setFormatter(formatter);
+			fh_e.setFormatter(formatter);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1270, 654);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,13 +151,20 @@ public class ParkingMain {
 		});
 		frame.getContentPane().add(list);
 		frame.getContentPane().add(panelHangar);
-    	JButton btnAddPlane = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
+		JButton btnAddPlane = new JButton("Заказать самолет");
 		btnAddPlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PlaneConfig configFrame = new PlaneConfig();
-				configFrame.frame.setVisible(true);
-				configFrame.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				configFrame.initializeConfig(panelHangar, hangar, list);
+				try {
+					configFrame.frame.setVisible(true);
+					configFrame.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					configFrame.initializeConfig(panelHangar, hangar, list); 
+					logger.info("Добавили самолет");
+				}
+				catch (ParkingOverflowException ex) {
+					logger_error.warning("Переполнение");
+					JOptionPane.showMessageDialog(null, "Переполнение");
+				}
 			}
 		});
 		btnAddPlane.setBounds(892, 169, 147, 44);
@@ -144,78 +178,102 @@ public class ParkingMain {
 		JMenuItem itemLoadAll = new JMenuItem("Загрузить все");
 		itemLoadAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			try {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setCurrentDirectory(new File("C:\\tmp\\file.txt"));
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Текстовый документ", "txt");
 				chooser.setFileFilter(filter);
 				int result = chooser.showOpenDialog(null);
 				if(result == JFileChooser.APPROVE_OPTION) {
-					if(hangar.loadData(chooser.getSelectedFile().getPath())) {
+						hangar.loadData(chooser.getSelectedFile().getPath());
 						JOptionPane.showMessageDialog(null, "Загружено");
 						panelHangar.setHangar(hangar.getHangar(list.getSelectedIndex()));
 						panelHangar.repaint();
-					} else {
-						JOptionPane.showMessageDialog(null, "Ошибка");
-					}
-				}
-			}
+						logger.info("Загрузили");
+  				}
+			} 
+			catch (ParkingOccupiedPlaceException ex) {
+				logger_error.warning("Место занято " + ex.getMessage());
+				JOptionPane.showMessageDialog(frame, ex.getMessage(),
+						"Exception", JOptionPane.ERROR_MESSAGE);
+			} 
+			catch (Exception ex) {
+				logger_error.warning("Не удалось найти файл");
+				JOptionPane.showMessageDialog(frame, "Не удалось найти файл",
+						"Exception", JOptionPane.ERROR_MESSAGE);
+			 } 
+		  }
 		});
 		menuFile.add(itemLoadAll);
 
 		JMenuItem mItemSaveAll = new JMenuItem("Сохранить все");
 		mItemSaveAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new JFileChooser();
-				chooser.setCurrentDirectory(new File("C:\\tmp\\file.txt"));
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Текстовый документ","txt");
-				chooser.setFileFilter(filter);
-				int result = chooser.showSaveDialog(null);
-				if(result == JFileChooser.APPROVE_OPTION) {
-					if (hangar.saveData(chooser.getSelectedFile().getPath())) {
-						JOptionPane.showMessageDialog(null, "Сохранено");
-					}else {
-						JOptionPane.showMessageDialog(null, "Ошибка");
+					try {
+						JFileChooser chooser = new JFileChooser();
+						chooser.setCurrentDirectory(new File("C:\\tmp\\file.txt"));
+						
+						int result = chooser.showSaveDialog(null);
+						if(result == JFileChooser.APPROVE_OPTION) {
+							hangar.saveData(chooser.getSelectedFile().getPath());
+								logger.info("Сохранили");
+								JOptionPane.showMessageDialog(null, "Сохранили");
+						}
+					} 
+					 catch (Exception e1) {						
+						 logger.info("Ошибка сохранения");
+							JOptionPane.showMessageDialog(null, "Ошибка сохранения");
 					}
-				}
+				}	
 			}
-		});
+		);
+		menuFile.add(mItemSaveAll);
 
 		JMenuItem menuItemLoadLevel = new JMenuItem("Загрузить уровень");
 		menuItemLoadLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			try {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setCurrentDirectory(new File("C:\\tmp\\fileLevel.txt"));
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Текстовый документ","txt");
 				chooser.setFileFilter(filter);
 				int result = chooser.showOpenDialog(null);
 				if(result == JFileChooser.APPROVE_OPTION) {
-					if(hangar.loadLevelData(chooser.getSelectedFile().getPath(), list.getSelectedIndex())) {
-						JOptionPane.showMessageDialog(null, "Загружено");
-						panelHangar.setHangar(hangar.getHangar(list.getSelectedIndex()));
-						panelHangar.repaint();
-					} else {
-						JOptionPane.showMessageDialog(null, "Ошибка");
-					}
+				    hangar.loadLevelData(chooser.getSelectedFile().getPath(), list.getSelectedIndex()); 
+					JOptionPane.showMessageDialog(null, "Загружено");
+					panelHangar.setHangar(hangar.getHangar(list.getSelectedIndex()));
+					panelHangar.repaint();
+					logger.info("Загрузили");
+				   }
+				}
+			catch (IOException ex) {
+				logger_error.warning("Ошибка загрузки уровня" + ex.getMessage());
+				JOptionPane.showMessageDialog(frame, "Место занято" + ex.getMessage(),
+							"Exception", JOptionPane.ERROR_MESSAGE);
+			} catch (ParkingOccupiedPlaceException ex) {
+				logger_error.warning("Место занято" + ex.getMessage());
+				JOptionPane.showMessageDialog(frame, ex.getMessage(),"Exception", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 		menuFile.add(menuItemLoadLevel);
-		menuFile.add(mItemSaveAll);
 
 		JMenuItem menuItemSaveLevel = new JMenuItem("Сохранить уровень");
 		menuItemSaveLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new JFileChooser();
-				chooser.setCurrentDirectory(new File("C:\\tmp\\fileLevel.txt"));
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Текстовый документ", "txt");
-				chooser.setFileFilter(filter);
-				int result = chooser.showSaveDialog(null);
-				if(result == JFileChooser.APPROVE_OPTION) {
-					if (hangar.saveLevelData(chooser.getSelectedFile().getPath(), list.getSelectedIndex())) {
-						JOptionPane.showMessageDialog(null, "Сохранено");
-					}else {
-						JOptionPane.showMessageDialog(null, "Ошибка");
+				try {
+					JFileChooser chooser = new JFileChooser();
+					chooser.setCurrentDirectory(new File("C:\\tmp\\fileLevel.txt"));
+					int result = chooser.showSaveDialog(null);
+					if(result == JFileChooser.APPROVE_OPTION) {
+						hangar.saveLevelData(chooser.getSelectedFile().getPath(), list.getSelectedIndex());
+							JOptionPane.showMessageDialog(null, "Сохранено");
+							logger.info("Сохранен Уровень");
 					}
+				} catch (Exception ex) {
+					logger_error.warning("Ошибка сохранения");
+					JOptionPane.showMessageDialog(frame, "Ошибка сохранения",
+							"Exception", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -231,23 +289,34 @@ public class ParkingMain {
 		buttonTakePlane = new JButton("\u0417\u0430\u0431\u0440\u0430\u0442\u044C");
 		buttonTakePlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textFieldIndex.getText() != "") {
+				try {
+					int p = Integer.parseInt(textFieldIndex.getText());
 					plane = hangar.getPlane(list.getSelectedIndex(),Integer.parseInt(textFieldIndex.getText()));
 					if (plane != null) {
 						panelTake.clear();
 						bankPlane.set(bankIndex, plane);
-						patch = hangar.getPatches(list.getSelectedIndex(), Integer.parseInt(textFieldIndex.getText()));
-						if (patch != null) {
+						if (plane instanceof BomberPlane) {
+							patch = hangar.getPatches(list.getSelectedIndex(), Integer.parseInt(textFieldIndex.getText()));
 							panelTake.drawplane(plane, patch);
 							bankPatches.set(bankIndex, patch);
 						} else {
 							panelTake.drawplane(plane);
+							logger.info("Создали самолет на месте" + p);
 						}
 						bankIndex++;
 						panelTake.plane.SetPosition(50, 50, panelHangarWidth, panelHangarHeight);
 						panelHangar.repaint();
 						panelTake.repaint();
 					}
+				}
+				catch (ParkingNotFoundException ex) {
+					logger_error.warning("Самолет не найден");
+					JOptionPane.showMessageDialog(null, "Самолет не найден",
+							"Exception", 0, null);
+				} catch (Exception ex) {
+					logger_error.warning("Ошибка");
+					JOptionPane.showMessageDialog(frame, "Ошибка",
+							"Exception", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -268,5 +337,5 @@ public class ParkingMain {
 		});
 		button_view_collection.setBounds(1015, 294, 119, 23);
 		frame.getContentPane().add(button_view_collection);
+		}
 	}
-}

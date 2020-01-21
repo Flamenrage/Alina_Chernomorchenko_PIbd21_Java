@@ -19,7 +19,7 @@ public class BomberPlane extends WarPlane {
         DopColor = dopColor;
         Bombs = bombs;
         Shoot = shoot;
-        BackBombs = backBombs;
+        BackBombs = backBombs; 
 	}
 	public BomberPlane(String config, String decksTypeConfig) {
 		super(config);
@@ -105,7 +105,6 @@ public class BomberPlane extends WarPlane {
 			g2.fillOval(_startPosX + 80/a, _startPosY + 5/a, 15/a, 10/a);
 			g2.fillOval(_startPosX + 80/a, _startPosY + 90/a, 15/a, 10/a); 
 			break;
-			
 		case 10:
 			g.setColor(Color.BLACK);
 			g2.drawOval(_startPosX + 83/a, _startPosY - 18/a, 15/a, 10/a);
@@ -167,7 +166,7 @@ public class BomberPlane extends WarPlane {
                 break;
         }
     }
- @Override
+    @Override
     public ITransport Clone(){
     	ITransport tr = new BomberPlane(this.MaxSpeed, this.Weight, this.MainColor, this.DopColor,
     			this.Bombs, this.Shoot, this.BackBombs);

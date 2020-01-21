@@ -1,8 +1,11 @@
 package mygame;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MultiLevelParking {
@@ -26,12 +29,12 @@ public class MultiLevelParking {
 		}
 		return null;
 	}
-	public ITransport getPlane(int i, int j) {
+	public ITransport getPlane(int i, int j) throws ParkingNotFoundException {
 		if((i > -1) && (i < hangarLevels.size())) {
 			if((j > -1) && (j < hangarLevels.get(i).maxCount)) {
 				ITransport plane = hangarLevels.get(i).getPlace(j);
-				hangarLevels.get(i).Remove(j);
-				return plane;
+			    hangarLevels.get(i).Remove(j);
+				return plane;		
 			}
 		}
 		return null;
@@ -46,9 +49,10 @@ public class MultiLevelParking {
 		}
 		return null;
 	}
-	public boolean loadData(String fileName) {
-		String buffer = "";
-		try {
+	
+	public void loadData(String fileName) throws IOException, ParkingOccupiedPlaceException {
+			String buffer = "";
+			int counter = -1;
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			buffer = br.readLine();
 			if (buffer.split(":")[0].equals("CountLevels")) {
@@ -57,9 +61,8 @@ public class MultiLevelParking {
 	                hangarLevels = new ArrayList<>(countLevel);
 			} else {
 				br.close();
-				return false;
+				throw new FileNotFoundException();
 			}
-			int counter = -1;
 			while (br.ready()) {
 				buffer = br.readLine();
 				ITransport plane = null;
@@ -79,23 +82,18 @@ public class MultiLevelParking {
 					hangarLevels.get(counter).AddPlane(plane, patches, Integer.parseInt(buffer.split(":")[0]));					
 				}
 			}
-			br.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return false;
-		}
-		return true;
+		br.close();
 	}
-	public boolean loadLevelData(String fileName, int index) {
-		String buffer = "";
-		try {
+	
+	public void loadLevelData(String fileName, int index) throws IOException, ParkingOccupiedPlaceException {
+			String buffer = "";
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			buffer = br.readLine();
 			if (buffer.equals("SingleLevel")) {
 				hangarLevels.set(index, new Parking<>(countPlaces, pictureWidth, pictureHeight));				
 			} else {
 				br.close();
-				return false;
+				throw new FileNotFoundException();
 			}
 			while (br.ready()) {
 				buffer = br.readLine();
@@ -113,14 +111,8 @@ public class MultiLevelParking {
 				}
 			}
 			br.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return false;
-		}
-		return true;
 	}
-	public boolean saveData(String fileName) {
-		try {
+	public void saveData(String fileName) throws IOException {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
 			bw.write("CountLevels:" + hangarLevels.size());
 			bw.newLine();
@@ -148,48 +140,34 @@ public class MultiLevelParking {
 				}
 			}
 			bw.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return false;
-		}
-		return true;
 	}
-	public boolean saveLevelData(String fileName, int index) {
-		try {
-			if ((index > hangarLevels.size())||(index < 0)){
-				return false;
-			}
+	public void saveLevelData(String fileName, int index) throws IOException {
+		if(index > -1 && index < hangarLevels.size()) {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
 			bw.write("SingleLevel");
 			bw.newLine();
 			Parking<ITransport, IPatch> level = hangarLevels.get(index);
-			
 			for (int i = 0; i < countPlaces; i++) {
-				ITransport plane = level.getPlace(i);
-				if (plane != null) {
-					if (!(plane instanceof BomberPlane)) {
-						bw.write(i + ":WarPlane:" + plane.getConfig());
+				ITransport ship = level.getPlace(i);
+				if (ship != null) {
+					if (!(ship instanceof BomberPlane)) {
+						bw.write(i + ":WarPlane:" + ship.getConfig());
 						bw.newLine();
 					} else {
-						IPatch patches = level.getPlacesPatches(i);
-						if (patches != null) {
-							bw.write(i + ":BomberPlane:" + patches.toString() + ":" + 
-									plane.getConfig());
+						IPatch decks = level.getPlacesPatches(i);
+						if (decks != null) {
+							bw.write(i + ":BomberPlane:" + decks.toString() + ":" + 
+									ship.getConfig());
 						} else {
 							bw.write(i + ":BomberPlane:" + "PlanePatches" + ":" +
-									plane.getConfig());
+									ship.getConfig());
 						}
 						bw.newLine();
 					}
 				}
 			}
 			bw.close();
-			
-		} 
-		catch (Exception ex) {
-			ex.printStackTrace();
-			return false;
 		}
-		return true;
+		else throw new IndexOutOfBoundsException();
 	}
 }
