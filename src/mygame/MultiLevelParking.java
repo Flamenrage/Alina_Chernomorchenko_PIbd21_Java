@@ -1,6 +1,8 @@
 package mygame;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,13 +33,8 @@ public class MultiLevelParking {
 		if((i > -1) && (i < hangarLevels.size())) {
 			if((j > -1) && (j < hangarLevels.get(i).maxCount)) {
 				ITransport plane = hangarLevels.get(i).getPlace(j);
-				try {
-					hangarLevels.get(i).Remove(j);
-					return plane;
-				}
-				catch(ParkingNotFoundException ex) {
-					throw new ParkingNotFoundException(j);
-				}
+			    hangarLevels.get(i).Remove(j);
+				return plane;		
 			}
 		}
 		return null;
@@ -52,10 +49,10 @@ public class MultiLevelParking {
 		}
 		return null;
 	}
-	public boolean loadData(String fileName) throws IOException, ParkingOccupiedPlaceException {
-		String buffer = "";
-		int counter = -1;
-		try {
+	
+	public void loadData(String fileName) throws IOException, ParkingOccupiedPlaceException {
+			String buffer = "";
+			int counter = -1;
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			buffer = br.readLine();
 			if (buffer.split(":")[0].equals("CountLevels")) {
@@ -64,7 +61,7 @@ public class MultiLevelParking {
 	                hangarLevels = new ArrayList<>(countLevel);
 			} else {
 				br.close();
-				return false;
+				throw new FileNotFoundException();
 			}
 			while (br.ready()) {
 				buffer = br.readLine();
@@ -85,24 +82,18 @@ public class MultiLevelParking {
 					hangarLevels.get(counter).AddPlane(plane, patches, Integer.parseInt(buffer.split(":")[0]));					
 				}
 			}
-			br.close();
-		} catch (ParkingOccupiedPlaceException | IOException ex) {
-			if (ex instanceof ParkingOccupiedPlaceException) {
-				throw new ParkingOccupiedPlaceException(counter);
-			} else throw new IOException();
-		}
-		return true;
+		br.close();
 	}
-	public boolean loadLevelData(String fileName, int index) throws IOException, ParkingOccupiedPlaceException {
-		String buffer = "";
-		try {
+	
+	public void loadLevelData(String fileName, int index) throws IOException, ParkingOccupiedPlaceException {
+			String buffer = "";
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			buffer = br.readLine();
 			if (buffer.equals("SingleLevel")) {
 				hangarLevels.set(index, new Parking<>(countPlaces, pictureWidth, pictureHeight));				
 			} else {
 				br.close();
-				return false;
+				throw new FileNotFoundException();
 			}
 			while (br.ready()) {
 				buffer = br.readLine();
@@ -120,15 +111,8 @@ public class MultiLevelParking {
 				}
 			}
 			br.close();
-		}  catch (ParkingOccupiedPlaceException ex) {
-			throw ex;			
-		} catch (IOException ex) {
-			throw ex;
-		}
-		return true;
 	}
 	public void saveData(String fileName) throws IOException {
-		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
 			bw.write("CountLevels:" + hangarLevels.size());
 			bw.newLine();
@@ -156,12 +140,9 @@ public class MultiLevelParking {
 				}
 			}
 			bw.close();
-		} catch (IOException ex) {
-			throw ex;
-	   }
 	}
 	public void saveLevelData(String fileName, int index) throws IOException {
-		try {
+		if(index > -1 && index < hangarLevels.size()) {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
 			bw.write("SingleLevel");
 			bw.newLine();
@@ -186,8 +167,7 @@ public class MultiLevelParking {
 				}
 			}
 			bw.close();
-		} catch (IOException ex) {
-			throw ex;
 		}
+		else throw new IndexOutOfBoundsException();
 	}
 }

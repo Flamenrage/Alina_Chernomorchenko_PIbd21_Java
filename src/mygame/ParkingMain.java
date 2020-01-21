@@ -11,7 +11,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
-
 import javax.swing.JPanel;
 import javax.swing.JDialog;
 import javax.swing.JButton;
@@ -37,6 +36,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.util.Hashtable;
 
 import javax.swing.border.TitledBorder;
@@ -152,7 +152,7 @@ public class ParkingMain {
 		});
 		frame.getContentPane().add(list);
 		frame.getContentPane().add(panelHangar);
-		JButton btnAddPlane = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
+		JButton btnAddPlane = new JButton("Заказать самолет");
 		btnAddPlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PlaneConfig configFrame = new PlaneConfig();
@@ -184,11 +184,14 @@ public class ParkingMain {
 				chooser.setCurrentDirectory(new File("C:\\tmp\\file.txt"));
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Текстовый документ", "txt");
 				chooser.setFileFilter(filter);
-			    hangar.loadData(chooser.getSelectedFile().getPath()); 
-				JOptionPane.showMessageDialog(null, "Загружено");
-				panelHangar.setHangar(hangar.getHangar(list.getSelectedIndex()));
-				panelHangar.repaint();
-				logger.info("Загрузили");
+				int result = chooser.showOpenDialog(null);
+				if(result == JFileChooser.APPROVE_OPTION) {
+						hangar.loadData(chooser.getSelectedFile().getPath());
+						JOptionPane.showMessageDialog(null, "Загружено");
+						panelHangar.setHangar(hangar.getHangar(list.getSelectedIndex()));
+						panelHangar.repaint();
+						logger.info("Загрузили");
+  				}
 			} 
 			catch (ParkingOccupiedPlaceException ex) {
 				logger_error.warning("Место занято " + ex.getMessage());
@@ -196,8 +199,8 @@ public class ParkingMain {
 						"Exception", JOptionPane.ERROR_MESSAGE);
 			} 
 			catch (Exception ex) {
-				logger_error.warning("Ошибка");
-				JOptionPane.showMessageDialog(frame, "Ошибка",
+				logger_error.warning("Не удалось найти файл");
+				JOptionPane.showMessageDialog(frame, "Не удалось найти файл",
 						"Exception", JOptionPane.ERROR_MESSAGE);
 			 } 
 		  }
@@ -207,21 +210,25 @@ public class ParkingMain {
 		JMenuItem mItemSaveAll = new JMenuItem("Сохранить все");
 		mItemSaveAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			try {
-			    JFileChooser chooser = new JFileChooser();
-				chooser.setCurrentDirectory(new File("C:\\tmp\\file.txt"));
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Текстовый документ","txt");
-				chooser.setFileFilter(filter);
-				hangar.saveData(chooser.getSelectedFile().getPath()); 
-				JOptionPane.showMessageDialog(null, "Сохранено");
-				logger.info("Сохранили все");		
+					try {
+						JFileChooser chooser = new JFileChooser();
+						chooser.setCurrentDirectory(new File("C:\\tmp\\file.txt"));
+						
+						int result = chooser.showSaveDialog(null);
+						if(result == JFileChooser.APPROVE_OPTION) {
+							hangar.saveData(chooser.getSelectedFile().getPath());
+								logger.info("Сохранили");
+								JOptionPane.showMessageDialog(null, "Сохранили");
+						}
+					} 
+					 catch (Exception e1) {						
+						 logger.info("Ошибка сохранения");
+							JOptionPane.showMessageDialog(null, "Ошибка сохранения");
+					}
+				}	
 			}
-			 catch (Exception e1) {						
-				    logger_error.warning("Ошибка при сохранении");
-					JOptionPane.showMessageDialog(null, "Ошибка при сохранении");
-			 }
-		  }
-		});
+		);
+		menuFile.add(mItemSaveAll);
 
 		JMenuItem menuItemLoadLevel = new JMenuItem("Загрузить уровень");
 		menuItemLoadLevel.addActionListener(new ActionListener() {
@@ -231,12 +238,15 @@ public class ParkingMain {
 				chooser.setCurrentDirectory(new File("C:\\tmp\\fileLevel.txt"));
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Текстовый документ","txt");
 				chooser.setFileFilter(filter);
-			    hangar.loadLevelData(chooser.getSelectedFile().getPath(), list.getSelectedIndex());
-				JOptionPane.showMessageDialog(null, "Загружено");
-				panelHangar.setHangar(hangar.getHangar(list.getSelectedIndex()));
-				panelHangar.repaint();
-				logger.info("Загрузили");
-			}
+				int result = chooser.showOpenDialog(null);
+				if(result == JFileChooser.APPROVE_OPTION) {
+				    hangar.loadLevelData(chooser.getSelectedFile().getPath(), list.getSelectedIndex()); 
+					JOptionPane.showMessageDialog(null, "Загружено");
+					panelHangar.setHangar(hangar.getHangar(list.getSelectedIndex()));
+					panelHangar.repaint();
+					logger.info("Загрузили");
+				   }
+				}
 			catch (IOException ex) {
 				logger_error.warning("Ошибка загрузки уровня" + ex.getMessage());
 				JOptionPane.showMessageDialog(frame, "Место занято" + ex.getMessage(),
@@ -248,31 +258,31 @@ public class ParkingMain {
 			}
 		});
 		menuFile.add(menuItemLoadLevel);
-		menuFile.add(mItemSaveAll);
 
 		JMenuItem menuItemSaveLevel = new JMenuItem("Сохранить уровень");
 		menuItemSaveLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			try {
-				JFileChooser chooser = new JFileChooser();
-				chooser.setCurrentDirectory(new File("C:\\tmp\\fileLevel.txt"));
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Текстовый документ", "txt");
-				chooser.setFileFilter(filter);
-			    hangar.saveLevelData(chooser.getSelectedFile().getPath(), list.getSelectedIndex());
-				JOptionPane.showMessageDialog(null, "Сохранено");
+				try {
+					JFileChooser chooser = new JFileChooser();
+					chooser.setCurrentDirectory(new File("C:\\tmp\\fileLevel.txt"));
+					int result = chooser.showSaveDialog(null);
+					if(result == JFileChooser.APPROVE_OPTION) {
+						hangar.saveLevelData(chooser.getSelectedFile().getPath(), list.getSelectedIndex());
+							JOptionPane.showMessageDialog(null, "Сохранено");
+							logger.info("Сохранен Уровень");
+					}
+				} catch (Exception ex) {
+					logger_error.warning("Ошибка сохранения");
+					JOptionPane.showMessageDialog(frame, "Ошибка сохранения",
+							"Exception", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			catch (Exception ex) {
-				logger_error.warning("Ошибка при сохранении уровня");
-				JOptionPane.showMessageDialog(frame, "Ошибка при сохранении уровня",
-						"Exception", JOptionPane.ERROR_MESSAGE);
-			 }
-		  }
 		});
 		menuFile.add(menuItemSaveLevel);
 		frame.getContentPane().add(btnAddPlane);
-		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
-		label_1.setBounds(901, 267, 48, 14);
-		frame.getContentPane().add(label_1);
+		JLabel label_name = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
+		label_name.setBounds(901, 267, 48, 14);
+		frame.getContentPane().add(label_name);
 		textFieldIndex = new JTextField();
 		textFieldIndex.setBounds(961, 264, 58, 20);
 		frame.getContentPane().add(textFieldIndex);
