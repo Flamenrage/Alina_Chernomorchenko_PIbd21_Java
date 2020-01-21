@@ -91,7 +91,6 @@ public class ParkingMain {
 	public ParkingMain() throws ParkingNotFoundException, ParkingOverflowException, 
 	SecurityException, IOException, ParkingOccupiedPlaceException {
 		initialize();
-		//initializeHangarPanel();
 	}
 	/**
 	 * Initialize the contents of the frame.
